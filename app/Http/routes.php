@@ -26,6 +26,22 @@ Route::get('/', function () {
 |
 */
 
-Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['web']], function () {
-    
+/*后天*/
+Route::group(['prefix' => 'admin', 'namespace' => 'Backend', 'middleware' => ['web']], function ($router) {
+    /*用户*/
+    $router->group(['prefix' => 'user'], function($router){
+	    require(__DIR__ . '/Routes/UserRoute.php');
+    });
+    /*权限*/
+    $router->group(['prefix' => 'permission'], function($router){
+	    require(__DIR__ . '/Routes/PermissionRoute.php');
+	});
+    /*角色*/
+    $router->group(['prefix' => 'role'], function($router){
+	    require(__DIR__ . '/Routes/RoleRoute.php');
+	});
+    /*菜单*/
+    $router->group(['prefix' => 'menu'], function($router){
+	    require(__DIR__ . '/Routes/MenuRoute.php');
+	});
 });
