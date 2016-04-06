@@ -32,14 +32,11 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Backend', 'middleware' => ['w
     require(__DIR__ . '/Routes/UserRoute.php');
     
     /*权限*/
-    $router->group(['prefix' => 'permission'], function($router){
-	    require(__DIR__ . '/Routes/PermissionRoute.php');
-	});
+    require(__DIR__ . '/Routes/PermissionRoute.php');
+    
     /*角色*/
     require(__DIR__ . '/Routes/RoleRoute.php');
     
     /*菜单*/
-    $router->group(['prefix' => 'menu'], function($router){
-	    require(__DIR__ . '/Routes/MenuRoute.php');
-	});
+    require(__DIR__ . '/Routes/MenuRoute.php');
 });
