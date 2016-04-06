@@ -16,4 +16,8 @@ class UserController extends Controller
     public function index(){
     	return view('backend.user.index');
     }
+
+    public function ngIndex(){
+    	return view('backend.user.ngindex');
+    }
 }

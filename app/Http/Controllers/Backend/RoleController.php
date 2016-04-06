@@ -9,5 +9,7 @@ use App\Http\Controllers\Controller;
 
 class RoleController extends Controller
 {
-    //
+    public function index(){
+    	echo 'asda';	
+    }
 }
