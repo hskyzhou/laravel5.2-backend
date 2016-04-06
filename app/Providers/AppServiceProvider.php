@@ -23,6 +23,20 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->bind('userrepository', function($app){
+            return new \App\Repositories\Backend\Userrepository();
+        });
+
+        $this->app->bind('rolerepository', function($app){
+            return new \App\Repositories\Backend\Rolerepository();
+        });
+
+        $this->app->bind('menurepository', function($app){
+            return new \App\Repositories\Backend\Menurepository();
+        });
+
+        $this->app->bind('permissionrepository', function($app){
+            return new \App\Repositories\Backend\Permissionrepository();
+        });
     }
 }

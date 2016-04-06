@@ -26,8 +26,8 @@
     <!-- END DYMANICLY LOADED CSS FILES -->
     <!-- BEGIN THEME STYLES -->
     <!-- DOC: To use 'rounded corners' style just load 'components-rounded.css' stylesheet instead of 'components.css' in the below style tag -->
-    <link href="{{asset('backend/global/css/components.min.css')}}" id="style_components" rel="stylesheet" type="text/css" />
-    <link href="{{asset('backend/global/css/plugins.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{asset('backend/global/css/components-md.min.css')}}" id="style_components" rel="stylesheet" type="text/css" />
+    <link href="{{asset('backend/global/css/plugins-md.min.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{asset('backend/layouts/css/layout.min.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{asset('backend/layouts/css/themes/darkblue.min.css')}}" rel="stylesheet" type="text/css" id="style_color" />
     <link href="{{asset('backend/layouts/css/custom.min.css')}}" rel="stylesheet" type="text/css" />

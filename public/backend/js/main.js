@@ -154,6 +154,19 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', '$locationProvider',
                         name : 'MetronicApp',
                         insertBefore : '#ng_load_plugins_before',
                         files : [
+                            /*datatable*/
+                            'backend/plugins/datatables/datatables.min.css',
+                            'backend/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css',
+                            'backend/global/plugins/datatables/datatables.min.js',
+                            'backend/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js',
+                            /*datepicker*/
+                            'backend/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css',
+                            'backend/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js',
+                            /*bootstrap-select*/
+                            'backend/plugins/bootstrap-select/css/bootstrap-select.min.css',
+                            'backend/plugins/bootstrap-select/js/bootstrap-select.min.js',
+
+                            'backend/js/scripts/user/TableAjax.js',
                             'backend/js/controllers/UserController.js',
                         ]
                     });

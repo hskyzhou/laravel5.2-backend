@@ -65,7 +65,7 @@ return [
     |
     */
 
-    'locale' => 'en',
+    'locale' => 'zh',
 
     /*
     |--------------------------------------------------------------------------
@@ -156,6 +156,10 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        /*第三方扩展*/
+        Barryvdh\Debugbar\ServiceProvider::class, //调试条
+        Kodeine\Acl\AclServiceProvider::class, //用户-角色-权限
+
     ],
 
     /*
@@ -202,6 +206,14 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View'      => Illuminate\Support\Facades\View::class,
 
+        /*第三方扩展*/
+        'Debugbar' => Barryvdh\Debugbar\Facade::class, //调试条
+
+        /*自定义 仓库*/
+        'UserRepo' => App\Facades\Backend\UserFacade::class, //用户仓库
+        'RoleRepo' => App\Facades\Backend\RoleFacade::class, //角色仓库
+        'PermissionRepo' => App\Facades\Backend\PermissionFacade::class, //权限仓库
+        'MenuRepo' => App\Facades\Backend\MenuFacade::class, //菜单仓库
     ],
 
 ];
