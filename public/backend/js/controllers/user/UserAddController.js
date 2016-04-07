@@ -1,19 +1,17 @@
-angular.module('MetronicApp').controller('UserController', function($rootScope, $scope, $http, $timeout) {
+angular.module('MetronicApp').controller('UserAddController', function($rootScope, $scope, $http, $timeout) {
     $scope.$on('$viewContentLoaded', function() {   
         // initialize core components
         App.initAjax();
-        /*初始化表格*/
-        TableAjax.init();
 
         $(".bs-select").selectpicker({
-        	iconBase:"fa",tickIcon:"fa-check"
-       	});
+          iconBase:"fa",tickIcon:"fa-check"
+        });
 
-       	$(".date-picker").datepicker({
-       		format:"yyyy/mm/dd",
-       		autoclose:true,
-       		todayBtn:true,
-       	});
+        $(".select2, .select2-multiple").select2({
+          placeholder: '选择角色',
+          width: null
+        });
+
     });
 
     // set sidebar closed and body solid layout mode

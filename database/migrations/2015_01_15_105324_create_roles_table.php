@@ -5,7 +5,6 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreateRolesTable extends Migration
 {
-
     /**
      * Run the migrations.
      *
@@ -14,10 +13,11 @@ class CreateRolesTable extends Migration
     public function up()
     {
         Schema::create('roles', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('name')->unique();
+            $table->increments('id')->unsigned();
+            $table->string('name');
             $table->string('slug')->unique();
-            $table->text('description')->nullable();
+            $table->string('description')->nullable();
+            $table->integer('level')->default(1);
             $table->timestamps();
         });
     }
@@ -31,5 +31,4 @@ class CreateRolesTable extends Migration
     {
         Schema::drop('roles');
     }
-
 }

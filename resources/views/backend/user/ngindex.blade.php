@@ -9,7 +9,9 @@
               </div>
               <div class="actions">
                   <div class="btn-group">
-                      
+                      <a href="{{route('admin.user.create')}}" class="btn btn-sm green">{{trans('label.add')}}
+                        <i class="fa fa-user-plus"></i>
+                      </a>
                   </div>
               </div>
           </div>
@@ -30,11 +32,10 @@
                   <table class="table table-striped table-bordered table-hover table-checkable" id="datatable_ajax">
                       <thead>
                           <tr role="row" class="heading">
-                              <th width="2%">
-                                  <input type="checkbox" class="group-checkable"> </th>
+                              <th width="2%"><input type="checkbox" class="group-checkable"> </th>
                               <th>{{trans('database.user.name')}}</th>
                               <th>{{trans('database.user.email')}}</th>
-                              <th>{{trans('database.user.status')}}</th>
+                              <th width="10%">{{trans('database.user.status')}}</th>
                               <th>{{trans('database.user.created_at')}}</th>
                               <th>{{trans('database.user.updated_at')}}</th>
                               <th>{{trans('label.action')}}</th>
@@ -48,7 +49,7 @@
                                       <span class="input-group-addon">
                                         <i class="fa fa-user"></i>
                                       </span>
-                                      <input type="text" class="form-control" placeholder="{{trans('database.user.name')}}" name="name">
+                                      <input type="text" class="form-control form-filter" placeholder="{{trans('database.user.name')}}" name="name">
                                       <div class="form-control-focus"> </div>
                                     </div>
                                   </div>
@@ -61,7 +62,7 @@
                                       <span class="input-group-addon">
                                         <i class="fa fa-envelope"></i>
                                       </span>
-                                      <input type="text" class="form-control" placeholder="{{trans('database.user.email')}}" name="email">
+                                      <input type="text" class="form-control form-filter" placeholder="{{trans('database.user.email')}}" name="email">
                                       <div class="form-control-focus"> </div>
                                     </div>
                                   </div>
@@ -69,18 +70,16 @@
                               </td>
                               <td>
                                 <div class="form-group form-md-line-input">
-                                  <div class="col-md-12">
-                                    <select class="bs-select form-control" data-show-subtext="true" name="status">
-                                      <option value="1" data-content="开启 <span class='label lable-sm label-success'>OPEN </span>">开启</option>
-                                      <option value="2" data-content="关闭 <span class='label lable-sm label-danger'>CLOSE </span>">关闭</option>
-                                    </select>
-                                  </div>
+                                  <select class="bs-select form-control form-filter" data-show-subtext="true" name="status">
+                                    <option value="{{config('backend.project.status.open')}}" data-content="{{trans('label.status.open')}} <span class='label lable-sm label-success'>OPEN </span>">{{trans('label.status.open')}}</option>
+                                    <option value="{{config('backend.project.status.close')}}" data-content="{{trans('label.status.close')}} <span class='label lable-sm label-danger'>CLOSE </span>">{{trans('label.status.close')}}</option>
+                                  </select>
                                 </div>                                
                               </td>
                               <td>
                                 <div class="col-md-12">
                                   <div class="input-group input-medium date date-picker" data-date-format="yyyy-mm-dd">
-                                    <input type="text" class="form-control" readonly placeholder="From" name="created_at_from">
+                                    <input type="text" class="form-control form-filter" readonly placeholder="From" name="created_at_from">
                                     <span class="input-group-btn">
                                       <button class="btn default" type="button">
                                         <i class="fa fa-calendar"></i>
@@ -92,7 +91,7 @@
 
                                 <div class="col-md-12">
                                   <div class="input-group input-medium date date-picker" data-date-format="yyyy-mm-dd">
-                                    <input type="text" class="form-control" readonly placeholder="To"  name="created_at_to">
+                                    <input type="text" class="form-control form-filter" readonly placeholder="To"  name="created_at_to">
                                     <span class="input-group-btn">
                                       <button class="btn default" type="button">
                                         <i class="fa fa-calendar"></i>
@@ -105,7 +104,7 @@
                               <td>
                                 <div class="col-md-12">
                                   <div class="input-group input-medium date date-picker" data-date-format="yyyy-mm-dd">
-                                    <input type="text" class="form-control" readonly placeholder="From"  name="updated_at_from">
+                                    <input type="text" class="form-control form-filter" readonly placeholder="From"  name="updated_at_from">
                                     <span class="input-group-btn">
                                       <button class="btn default" type="button">
                                         <i class="fa fa-calendar"></i>
@@ -117,7 +116,7 @@
 
                                 <div class="col-md-12">
                                   <div class="input-group input-medium date date-picker" data-date-format="yyyy-mm-dd">
-                                    <input type="text" class="form-control" readonly placeholder="To"  name="updated_at_to">
+                                    <input type="text" class="form-control form-filter" readonly placeholder="To"  name="updated_at_to">
                                     <span class="input-group-btn">
                                       <button class="btn default" type="button">
                                         <i class="fa fa-calendar"></i>

@@ -22,3 +22,12 @@
 			}
 		}
 	}
+
+	if(!function_exists('sprintfArr')){
+		function sprintfArr($arr, $template = ''){
+			foreach($arr as $key => $val){
+				
+				
+			}
+		}
+	}

@@ -158,7 +158,7 @@ return [
 
         /*第三方扩展*/
         Barryvdh\Debugbar\ServiceProvider::class, //调试条
-        Kodeine\Acl\AclServiceProvider::class, //用户-角色-权限
+        Bican\Roles\RolesServiceProvider::class, //用户-角色-权限
 
     ],
 

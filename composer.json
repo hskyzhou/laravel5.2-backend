@@ -7,7 +7,7 @@
     "require": {
         "php": ">=5.5.9",
         "laravel/framework": "5.2.*",
-        "kodeine/laravel-acl": "~1.0@dev",
+        "bican/roles": "2.1.*",
         "barryvdh/laravel-debugbar": "^2.2",
         "doctrine/dbal": "^2.5"
 

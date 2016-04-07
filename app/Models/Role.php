@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
-use Kodeine\Acl\Models\Eloquent\Role;
+use Bican\Roles\Models\Role as BicanRole;
 
-class Role extends Role
+class Role extends BicanRole
 {
     //
 }

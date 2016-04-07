@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "cd820414541900f74dfc6c6f666b581f",
-    "content-hash": "496d383527341df326c24ca0073cf969",
+    "hash": "736bc730d5e5d4ada26ed198c68651b3",
+    "content-hash": "8150824008f8b21f990f282991d90ae2",
     "packages": [
         {
             "name": "barryvdh/laravel-debugbar",
@@ -60,6 +60,51 @@
                 "webprofiler"
             ],
             "time": "2016-02-17 08:32:21"
+        },
+        {
+            "name": "bican/roles",
+            "version": "2.1.7",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/romanbican/roles.git",
+                "reference": "582349795ef0af9ff1a64bb2c1b884bbd5ab7c98"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/romanbican/roles/zipball/582349795ef0af9ff1a64bb2c1b884bbd5ab7c98",
+                "reference": "582349795ef0af9ff1a64bb2c1b884bbd5ab7c98",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "~5.0",
+                "php": ">=5.5.9"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Bican\\Roles": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Roman Bičan",
+                    "email": "romanbican@seznam.cz"
+                }
+            ],
+            "description": "Powerful package for handling roles and permissions in Laravel 5.",
+            "keywords": [
+                "acl",
+                "auth",
+                "illuminate",
+                "laravel",
+                "permissions",
+                "roles"
+            ],
+            "time": "2015-07-30 10:00:12"
         },
         {
             "name": "classpreloader/classpreloader",
@@ -761,53 +806,6 @@
                 "tokenizer"
             ],
             "time": "2015-12-05 17:17:57"
-        },
-        {
-            "name": "kodeine/laravel-acl",
-            "version": "1.0.x-dev",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/kodeine/laravel-acl.git",
-                "reference": "8a1ca6b9c7146bb0f158cc3d19170bfb2e3e7a8e"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/kodeine/laravel-acl/zipball/8a1ca6b9c7146bb0f158cc3d19170bfb2e3e7a8e",
-                "reference": "8a1ca6b9c7146bb0f158cc3d19170bfb2e3e7a8e",
-                "shasum": ""
-            },
-            "require": {
-                "illuminate/support": "~5.0",
-                "php": ">=5.5.9"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Kodeine\\Acl\\": "src/Kodeine/Acl"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Ahsen M.",
-                    "homepage": "https://github.com/kodeine",
-                    "role": "Developer"
-                }
-            ],
-            "description": "Light-weight role-based permissions for Laravel 5 built in Auth system.",
-            "keywords": [
-                "acl",
-                "auth",
-                "eloquent",
-                "laravel",
-                "permissions",
-                "roles",
-                "security"
-            ],
-            "time": "2016-02-06 01:50:02"
         },
         {
             "name": "laravel/framework",
@@ -3571,9 +3569,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "kodeine/laravel-acl": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

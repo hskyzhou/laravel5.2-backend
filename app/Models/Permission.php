@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
-use Kodeine\Acl\Models\Eloquent\Permission;
+use Bican\Roles\Models\Permission as BicanPermission;
 
-class Permission extends Permission
+class Permission extends BicanPermission
 {
     //
 }

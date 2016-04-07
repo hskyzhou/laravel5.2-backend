@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class BigintUserKeys extends Migration
+class AddColumnStatusRole extends Migration
 {
     /**
      * Run the migrations.
@@ -12,8 +12,8 @@ class BigintUserKeys extends Migration
      */
     public function up()
     {
-        Schema::table('role_user', function ($table) {
-            $table->bigInteger("user_id")->unsigned()->change();
+        Schema::table('roles', function(Blueprint $table){
+            $table->tinyInteger('status')->unsigned()->comment('角色状态, 1-正常，2-禁止');
         });
     }
 
@@ -24,8 +24,8 @@ class BigintUserKeys extends Migration
      */
     public function down()
     {
-        Schema::table('role_user', function ($table) {
-            $table->integer("user_id")->unsigned()->change();
+        Schema::table('roles', function(Blueprint $table){
+            $table->dropColumn('status');
         });
     }
 }

@@ -151,23 +151,48 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', '$locationProvider',
             resolve : {
                 deps : ['$ocLazyLoad', function($ocLazyLoad){
                     return $ocLazyLoad.load({
+                        cache : false,
                         name : 'MetronicApp',
                         insertBefore : '#ng_load_plugins_before',
                         files : [
-                            /*datatable*/
                             'backend/plugins/datatables/datatables.min.css',
                             'backend/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css',
-                            'backend/global/plugins/datatables/datatables.min.js',
-                            'backend/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js',
-                            /*datepicker*/
                             'backend/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css',
-                            'backend/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js',
-                            /*bootstrap-select*/
                             'backend/plugins/bootstrap-select/css/bootstrap-select.min.css',
+
+                            'backend/global/plugins/datatables/datatables.all.min.js',
+                            'backend/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js',
                             'backend/plugins/bootstrap-select/js/bootstrap-select.min.js',
 
                             'backend/js/scripts/user/TableAjax.js',
-                            'backend/js/controllers/UserController.js',
+                            'backend/js/controllers/user/UserController.js',
+                        ]
+                    });
+                }]
+            }
+        })
+        .state('user_add', {
+            url : '/admin/user/create',
+            templateUrl : 'admin/user/ngcreate',
+            data : {pageTitle : "添加用户"},
+            controller : 'UserAddController',
+            resolve : {
+                deps : ['$ocLazyLoad', function($ocLazyLoad){
+                    return $ocLazyLoad.load({
+                        cache : false,
+                        name : 'MetronicApp',
+                        insertBefore : '#ng_load_plugins_before',
+                        files : [
+                            'backend/plugins/bootstrap-select/css/bootstrap-select.min.css',
+                            'backend/plugins/select2/css/select2.min.css',
+                            'backend/plugins/select2/css/select2-bootstrap.min.css',
+                            'backend/plugins/icheck/skins/all.css',
+
+                            'backend/plugins/bootstrap-select/js/bootstrap-select.min.js',
+                            'backend/plugins/select2/js/select2.full.min.js',
+                            'backend/plugins/icheck/icheck.min.js',
+
+                            'backend/js/controllers/user/UserAddController.js',
                         ]
                     });
                 }]

@@ -23,7 +23,7 @@
 			$status = (isset($searchData['status']) && !empty($searchData['status'])) ? $searchData['status'] : request('status', '');
 			$created_at_from = (isset($searchData['created_at_from']) && !empty($searchData['created_at_from'])) ? $searchData['created_at_from'] : request('created_at_from', '');
 			$created_at_to = (isset($searchData['created_at_to']) && !empty($searchData['created_at_to'])) ? $searchData['created_at_to'] : request('created_at_to', '');
-			$updateded_at_from = (isset($searchData['updateded_at_from']) && !empty($searchData['updateded_at_from'])) ? $searchData['updateded_at_from'] : request('updateded_at_from', '');
+			$updated_at_from = (isset($searchData['updated_at_from']) && !empty($searchData['updated_at_from'])) ? $searchData['updated_at_from'] : request('updated_at_from', '');
 			$updated_at_to = (isset($searchData['updated_at_to']) && !empty($searchData['updated_at_to'])) ? $searchData['updated_at_to'] : request('updated_at_to', '');
 
 			$returnData = [

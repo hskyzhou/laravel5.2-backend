@@ -24,9 +24,10 @@ var TableAjax = function(){
       },
       "columns": [
         {
-        	"data": "id",
-        	"name" : "id",
-        	"orderable" : false,
+        	data: "id",
+        	name : "id",
+        	orderable : false,
+        	
       	},
         {
         	"data": "name",

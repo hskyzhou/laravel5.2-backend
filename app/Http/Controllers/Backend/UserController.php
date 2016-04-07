@@ -9,6 +9,8 @@ use App\Http\Controllers\Controller;
 
 /*仓库*/
 use UserRepo;
+use RoleRepo;
+use PermissionRepo;
 
 class UserController extends Controller
 {
@@ -41,4 +43,29 @@ class UserController extends Controller
         return response()->json($returnData);
     }
 
+
+    /**
+     * 创建用户
+     * 
+     * @param        
+     * 
+     * @author        xezw211@gmail.com
+     * 
+     * @date        2016-04-07 13:32:11
+     * 
+     * @return        
+     */
+    public function create(){
+        return view('backend.user.index');
+    }
+
+    public function ngCreate(){
+        /*角色列表*/
+        $roles = RoleRepo::all();
+
+        /*权限列表*/
+        $permissions = PermissionRepo::bkPermissionList();
+
+        return view('backend.user.ngcreate', compact('roles', 'permissions'));
+    }
 }
