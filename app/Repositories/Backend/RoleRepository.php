@@ -19,4 +19,24 @@
 		public function all(){
 			return Role::all();
 		}
+
+		/**
+		 * 通过slug获取角色
+		 * 
+		 * @param		
+		 * 
+		 * @author		xezw211@gmail.com
+		 * 
+		 * @date		2016-04-09 09:45:23
+		 * 
+		 * @return		
+		 */
+		public function getRolesBySlug($roles){
+			if(empty($roles)){
+				$roles = request('roles');
+			}
+
+			return Role::whereIn('slug', $roles)->get();
+		}
+		
 	}

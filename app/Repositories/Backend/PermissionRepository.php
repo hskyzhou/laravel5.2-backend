@@ -52,4 +52,24 @@
 		public function all(){
 			return Permission::all();
 		}
+
+		/**
+		 * 通过slug获取权限
+		 * 
+		 * @param		
+		 * 
+		 * @author		xezw211@gmail.com
+		 * 
+		 * @date		2016-04-09 09:48:39
+		 * 
+		 * @return		
+		 */
+		public function getPermissionBySlug($permissions){
+			if(empty($permissions)){
+				$permissions = request('permission', []);
+			}
+
+			return Permission::whereIn('slug', $permissions)->get();
+		}
+		
 	}

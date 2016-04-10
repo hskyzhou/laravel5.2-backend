@@ -55,8 +55,8 @@ var TableAjax = function(){
         	"orderable" : true,
         },
         { 
-        	"data": "updated_at",
-        	"name": "updated_at",
+        	"data": "button",
+        	"name": "button",
         	"orderable" : false,
         },
     	],

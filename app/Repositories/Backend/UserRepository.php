@@ -3,6 +3,10 @@
 
 	use App\User;
 
+	/*仓库*/
+	use RoleRepo;
+	use PermissionRepo;
+
 	class UserRepository{
 		
 		/**
@@ -72,9 +76,37 @@
 			if($count){
 				$returnData['recordsTotal'] = $count;
 				$returnData['recordsFiltered'] = $count;
-				$returnData['data'] = $user->get()->toArray();
+
+				$users = $user->get();
+				$new_users = [];
+				foreach($users as $key => $user){
+					$new_users[$key] = $user->toArray();
+					$new_users[$key]['button'] = $user->updateButton()->deleteButton()->getButtonString();
+					$new_users[$key]['status'] = (config('backend.project.status.open') == $user->status) ? trans('label.status.open') : trans('label.status.close');
+				}
+				$returnData['data'] = $new_users;
 			}
 
 			return $returnData;
 		}
+
+		/**
+		 * 创建用户
+		 * 
+		 * @param		
+		 * 
+		 * @author		xezw211@gmail.com
+		 * 
+		 * @date		2016-04-09 09:36:53
+		 * 
+		 * @return		
+		 */
+		public function createUser($userData){
+			$user = new User;
+
+			$user->fill($userData)->save();
+
+			return $user;
+		}
+		
 	}

@@ -70,5 +70,34 @@ class PermissionSeeder extends Seeder
         	'description' => '删除角色',
         	'model' => 'App\Models\Role',
         ]);
+
+        /*菜单*/
+        Permission::create([
+            'name' => '管理菜单',
+            'slug' => 'menu.manage',
+            'description' => '管理菜单',
+            'model' => 'App\Models\Menu',
+        ]);
+
+        Permission::create([
+            'name' => '添加菜单',
+            'slug' => 'menu.create',
+            'description' => '添加菜单',
+            'model' => 'App\Models\Menu',
+        ]);
+
+        Permission::create([
+            'name' => '修改菜单',
+            'slug' => 'menu.update',
+            'description' => '修改菜单',
+            'model' => 'App\Models\Menu',
+        ]);
+
+        Permission::create([
+            'name' => '删除菜单',
+            'slug' => 'menu.delete',
+            'description' => '删除菜单',
+            'model' => 'App\Models\Menu',
+        ]);
     }
 }
