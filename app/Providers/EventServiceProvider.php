@@ -13,8 +13,14 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        'App\Events\SomeEvent' => [
-            'App\Listeners\EventListener',
+        /*添加角色*/
+        'App\Events\Backend\AddRoleEvent' => [
+            'App\Listeners\Backend\AddRoleEventListener',
+        ],
+
+        /*添加权限*/
+        'App\Events\Backend\AddPermissionEvent' => [
+            'App\Listeners\Backend\AddPermissionEventListener',
         ],
     ];
 

@@ -7,16 +7,22 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Bican\Roles\Traits\HasRoleAndPermission;
 use Bican\Roles\Contracts\HasRoleAndPermission as HasRoleAndPermissionContract;
 
+use App\Traits\ModelTrait;
+
 class User extends Authenticatable implements HasRoleAndPermissionContract
 {
     use HasRoleAndPermission;
+    use ModelTrait;
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name',
+        'email', 
+        'password',
+        'status',
     ];
 
     /**
@@ -27,4 +33,6 @@ class User extends Authenticatable implements HasRoleAndPermissionContract
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    protected $type = 'admin.user';
 }

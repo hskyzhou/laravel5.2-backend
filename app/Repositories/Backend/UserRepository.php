@@ -70,11 +70,45 @@
 			$count = $user->count();
 
 			if($count){
+				/*用户数据处理*/
+				$data = [];
+				$users = $user->get();
+				if(!$users->isEmpty()){
+					foreach($users as $key => $user){
+						$data[$key] = $user->toArray();
+						$data[$key]['status'] = $user->status == config('backend.project.status.open') ? trans('label.status.open') : trans('label.status.close');
+						$data[$key]['button'] = $user->updateButton()->deleteButton()->getButtonString();
+					}
+				}
+
 				$returnData['recordsTotal'] = $count;
 				$returnData['recordsFiltered'] = $count;
-				$returnData['data'] = $user->get()->toArray();
+				$returnData['data'] = $data;
 			}
 
 			return $returnData;
+		}
+
+		/**
+		 * 添加用户
+		 * 
+		 * @param		
+		 * 
+		 * @author		xezw211@gmail.com
+		 * 
+		 * @date		2016-04-11 09:37:30
+		 * 
+		 * @return		
+		 */
+		public function createUser($data){
+			$user = new User;
+
+			$user->fill($data)->save();
+
+			if(!$user){
+				\Log::info("用户添加失败\n");
+			}
+
+			return $user;
 		}
 	}
