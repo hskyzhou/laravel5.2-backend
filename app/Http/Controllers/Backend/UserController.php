@@ -109,7 +109,17 @@ class UserController extends Controller
      * @return        
      */
     public function edit(){
+        return view('backend.user.index');
+    }
 
+    public function ngEdit(){
+        /*角色列表*/
+        $roles = RoleRepo::all();
+
+        /*权限列表*/
+        $permissions = PermissionRepo::bkPermissionList();
+
+        return view('backend.user.ngedit', compact('roles', 'permissions'));
     }
 
     /**

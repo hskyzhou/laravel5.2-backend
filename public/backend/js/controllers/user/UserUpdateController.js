@@ -1,4 +1,4 @@
-angular.module('MetronicApp').controller('UserAddController', function($rootScope, $scope, $http, $timeout) {
+angular.module('MetronicApp').controller('UserUpdateController', function($rootScope, $scope, $http, $timeout) {
     $scope.$on('$viewContentLoaded', function() {   
         // initialize core components
         App.initAjax();

@@ -31,11 +31,7 @@
 		 * 
 		 * @return		
 		 */
-		public function getRolesBySlug($roles){
-			if(empty($roles)){
-				$roles = request('roles');
-			}
-
+		public function getRolesBySlug($roles = []){
 			return Role::whereIn('slug', $roles)->get();
 		}
 	}

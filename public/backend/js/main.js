@@ -204,6 +204,35 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', '$locationProvider',
                 }]
             }
         })
+        .state('user_update', {
+            url : '/admin/user/:id/edit',
+            templateUrl : function($stateParams){
+              return 'admin/user/ngedit/' + $stateParams.id;
+            },
+            data : {pageTitle : "修改用户"},
+            controller : 'UserUpdateController',
+            resolve : {
+                deps : ['$ocLazyLoad', function($ocLazyLoad){
+                    return $ocLazyLoad.load({
+                        cache : false,
+                        name : 'MetronicApp',
+                        insertBefore : '#ng_load_plugins_before',
+                        files : [
+                            'backend/plugins/bootstrap-select/css/bootstrap-select.min.css',
+                            'backend/plugins/select2/css/select2.min.css',
+                            'backend/plugins/select2/css/select2-bootstrap.min.css',
+                            'backend/plugins/icheck/skins/all.css',
+
+                            'backend/plugins/bootstrap-select/js/bootstrap-select.min.js',
+                            'backend/plugins/select2/js/select2.full.min.js',
+                            'backend/plugins/icheck/icheck.min.js',
+
+                            'backend/js/controllers/user/UserUpdateController.js',
+                        ]
+                    });
+                }]
+            }
+        })
         // Dashboard
         .state('dashboard', {
             url: "/dashboard.html",

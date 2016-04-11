@@ -64,11 +64,7 @@
 		 * 
 		 * @return		
 		 */
-		public function getPermissionBySlug($permissions){
-			if(empty($permissions)){
-				$permissions = request('permission', []);
-			}
-
+		public function getPermissionsBySlug($permissions = []){
 			return Permission::whereIn('slug', $permissions)->get();
 		}
 	}
