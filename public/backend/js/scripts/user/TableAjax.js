@@ -27,7 +27,6 @@ var TableAjax = function(){
         	data: "id",
         	name : "id",
         	orderable : false,
-        	
       	},
         {
         	"data": "name",

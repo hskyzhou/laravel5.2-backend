@@ -77,7 +77,7 @@
 					foreach($users as $key => $user){
 						$data[$key] = $user->toArray();
 						$data[$key]['status'] = $user->status == config('backend.project.status.open') ? trans('label.status.open') : trans('label.status.close');
-						$data[$key]['button'] = $user->updateButton()->deleteButton()->getButtonString();
+						$data[$key]['button'] = $user->updateButton()->deleteButton(['class' => 'btn btn-danger userdelete'])->getButtonString();
 					}
 				}
 

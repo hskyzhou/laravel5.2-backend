@@ -70,7 +70,7 @@
 				'class' => 'btn btn-danger',
 			];
 			$options = array_merge($defaultOptions, $options);
-			$this->buttonString .= "<a href='{$options['url']}' class='{$options['class']}'>{$options['name']}</a>";
+			$this->buttonString .= "<a ng-click='delete()' class='{$options['class']}'>{$options['name']}</a>";
 			return $this;
 		}
 	}
