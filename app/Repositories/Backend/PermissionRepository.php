@@ -54,7 +54,7 @@
 		}
 
 		/**
-		 * 通过slug获取权限
+		 * 通过slug 获取权限
 		 * 
 		 * @param		
 		 * 
@@ -71,5 +71,4 @@
 
 			return Permission::whereIn('slug', $permissions)->get();
 		}
-		
 	}

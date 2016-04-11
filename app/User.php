@@ -14,7 +14,7 @@ class User extends Authenticatable implements HasRoleAndPermissionContract
     use ModelTrait;
     use HasRoleAndPermission;
 
-    private $type = 'admin.user';
+    protected $type = 'admin.user';
     /**
      * The attributes that are mass assignable.
      *

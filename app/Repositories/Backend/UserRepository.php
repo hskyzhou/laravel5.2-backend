@@ -74,17 +74,20 @@
 			$count = $user->count();
 
 			if($count){
+				/*用户数据处理*/
+				$data = [];
+				$users = $user->get();
+				if(!$users->isEmpty()){
+					foreach($users as $key => $user){
+						$data[$key] = $user->toArray();
+						$data[$key]['status'] = $user->status == config('backend.project.status.open') ? trans('label.status.open') : trans('label.status.close');
+						$data[$key]['button'] = $user->updateButton()->deleteButton(['class' => 'btn btn-danger userdelete'])->getButtonString();
+					}
+				}
+
 				$returnData['recordsTotal'] = $count;
 				$returnData['recordsFiltered'] = $count;
-
-				$users = $user->get();
-				$new_users = [];
-				foreach($users as $key => $user){
-					$new_users[$key] = $user->toArray();
-					$new_users[$key]['button'] = $user->updateButton()->deleteButton()->getButtonString();
-					$new_users[$key]['status'] = (config('backend.project.status.open') == $user->status) ? trans('label.status.open') : trans('label.status.close');
-				}
-				$returnData['data'] = $new_users;
+				$returnData['data'] = $data;
 			}
 
 			return $returnData;
@@ -102,11 +105,15 @@
 		 * @return		
 		 */
 		public function createUser($userData){
+			
 			$user = new User;
 
 			$user->fill($userData)->save();
 
+			if(!$user){
+				\Log::info("用户添加失败\n");
+			}
+
 			return $user;
 		}
-		
 	}

@@ -38,5 +38,4 @@
 
 			return Role::whereIn('slug', $roles)->get();
 		}
-		
 	}
