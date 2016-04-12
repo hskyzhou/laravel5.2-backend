@@ -67,4 +67,57 @@
 		public function getPermissionsBySlug($permissions = []){
 			return Permission::whereIn('slug', $permissions)->get();
 		}
+
+		/**
+		 * 获取用户权限
+		 * 
+		 * @param		
+		 * 
+		 * @author		xezw211@gmail.com
+		 * 
+		 * @date		2016-04-12 10:05:09
+		 * 
+		 * @return		
+		 */
+		public function userPermissions($user){
+			return $user->getPermissions();
+		}
+
+		/**
+		 * 获取 用户权限的slug
+		 * 
+		 * @param		
+		 * 
+		 * @author		xezw211@gmail.com
+		 * 
+		 * @date		2016-04-12 10:54:18
+		 * 
+		 * @return		
+		 */
+		public function userPermissionSlugs($user){
+			$userPermissionSlugs = [];
+
+			$userPermissions = $this->userPermissions($user);
+			
+			if(!$userPermissions->isEmpty()){
+				$userPermissionSlugs = $userPermissions->keyBy('slug')->keys()->toArray();
+			}
+
+			return $userPermissionSlugs;
+		}
+
+		/**
+		 * 删除用户所有权限
+		 * 
+		 * @param		
+		 * 
+		 * @author		xezw211@gmail.com
+		 * 
+		 * @date		2016-04-12 11:56:39
+		 * 
+		 * @return		
+		 */
+		public function detachUserPermissions($user){
+			$user->detachAllPermissions();
+		}
 	}

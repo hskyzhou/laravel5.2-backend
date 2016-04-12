@@ -17,18 +17,6 @@
           </div>
           <div class="portlet-body">
               <div class="table-container">
-                  <div class="table-actions-wrapper">
-                      <span> </span>
-                      <select class="table-group-action-input form-control input-inline input-small input-sm">
-                          <option value="">Select...</option>
-                          <option value="Cancel">Cancel</option>
-                          <option value="Cancel">Hold</option>
-                          <option value="Cancel">On Hold</option>
-                          <option value="Close">Close</option>
-                      </select>
-                      <button class="btn btn-sm green table-group-action-submit">
-                          <i class="fa fa-check"></i> Submit</button>
-                  </div>
                   <table class="table table-striped table-bordered table-hover table-checkable" id="datatable_ajax">
                       <thead>
                           <tr role="row" class="heading">
@@ -71,6 +59,7 @@
                               <td>
                                 <div class="form-group form-md-line-input">
                                   <select class="bs-select form-control form-filter" data-show-subtext="true" name="status">
+                                    <option value="{{config('backend.project.status.select')}}" data-content="{{trans('label.status.select')}} <span class='label lable-sm label-default'>select </span>">{{trans('label.status.select')}}</option>
                                     <option value="{{config('backend.project.status.open')}}" data-content="{{trans('label.status.open')}} <span class='label lable-sm label-success'>OPEN </span>">{{trans('label.status.open')}}</option>
                                     <option value="{{config('backend.project.status.close')}}" data-content="{{trans('label.status.close')}} <span class='label lable-sm label-danger'>CLOSE </span>">{{trans('label.status.close')}}</option>
                                   </select>

@@ -3,6 +3,17 @@ angular.module('MetronicApp').controller('UserUpdateController', function($rootS
         // initialize core components
         App.initAjax();
 
+        /*初始化 icheck*/
+        $(".parentcheckbox").each(function(index){
+            $this = $(this);
+            var length = $this.parents('.icheck-list').find('.soncheckbox:checked').length;
+            if(length == 0){
+                $this.prop('checked', false).iCheck('update');
+            }else{
+                $this.prop('checked', true).iCheck('update');
+            }
+        });
+
         /*bs select*/
         $(".bs-select").selectpicker({
           iconBase:"fa",tickIcon:"fa-check"

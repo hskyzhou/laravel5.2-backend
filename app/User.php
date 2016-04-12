@@ -15,6 +15,7 @@ class User extends Authenticatable implements HasRoleAndPermissionContract
     use HasRoleAndPermission;
 
     protected $type = 'admin.user';
+    
     /**
      * The attributes that are mass assignable.
      *
@@ -33,6 +34,7 @@ class User extends Authenticatable implements HasRoleAndPermissionContract
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password', 
+        'remember_token',
     ];
 }

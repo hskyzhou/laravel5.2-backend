@@ -1,8 +1,11 @@
 <?php 
 	namespace App\Traits;
 
+	use Hashids;
+
 	Trait ModelTrait{
 		private $buttonString;
+		private $encrypt_id;
 
 		public function getButtonString(){
 			return $this->buttonString;
@@ -42,9 +45,13 @@
 		 * @return		
 		 */
 		public function updateButton($options = []){
+			$encrypt_id = $this->id;
+			if(config('backend.project.encrypt.id')){
+				$encrypt_id = Hashids::encode($encrypt_id);
+			}
 			$defaultOptions = [
 				'name' => '修改',
-				'url' => route($this->type . '.edit', [$this->id]),
+				'url' => route($this->type . '.edit', [$encrypt_id]),
 				'class' => 'btn btn-warning',
 			];
 			$options = array_merge($defaultOptions, $options);
@@ -64,13 +71,17 @@
 		 * @return		
 		 */
 		public function deleteButton($options = []){
+			$encrypt_id = $this->id;
+			if(config('backend.project.encrypt.id')){
+				$encrypt_id = Hashids::encode($encrypt_id);
+			}
 			$defaultOptions = [
 				'name' => '删除',
-				'url' => route($this->type . '.destroy', [$this->id]),
+				'url' => route($this->type . '.destroy', [$encrypt_id]),
 				'class' => 'btn btn-danger',
 			];
 			$options = array_merge($defaultOptions, $options);
-			$this->buttonString .= "<a ng-click='delete()' class='{$options['class']}'>{$options['name']}</a>";
+			$this->buttonString .= "<a class='{$options['class']}' data-url='{$options['url']}'>{$options['name']}</a>";
 			return $this;
 		}
 	}

@@ -5,7 +5,7 @@
 		$router->get('ngindex', 'UserController@ngIndex');
 		$router->get('ngcreate', 'UserController@ngCreate');
 		$router->get('ajuserlist', 'UserController@adminAjaxUserList');
-		$router->get('ngedit/{id}', 'UserController@ngEdit');
+		$router->get('ngedit/{id}', 'UserController@ngEdit')->where(['id' => '[0-9a-zA-Z]+']);
 	});
 
 	$router->resource('user', 'UserController');

@@ -159,6 +159,10 @@ return [
         /*第三方扩展*/
         Barryvdh\Debugbar\ServiceProvider::class, //调试条
         Bican\Roles\RolesServiceProvider::class, //用户-角色-权限
+        Laracasts\Utilities\JavaScript\JavaScriptServiceProvider::class, //输出php变量到js
+        Vinkla\Hashids\HashidsServiceProvider::class, //加密id
+        Laracasts\Flash\FlashServiceProvider::class, //flash 数据到页面
+
 
     ],
 
@@ -208,6 +212,8 @@ return [
 
         /*第三方扩展*/
         'Debugbar' => Barryvdh\Debugbar\Facade::class, //调试条
+        'Hashids' => Vinkla\Hashids\Facades\Hashids::class, //加密id  
+        'Flash' => Laracasts\Flash\Flash::class, //flash数据
 
         /*自定义 仓库*/
         'UserRepo' => App\Facades\Backend\UserFacade::class, //用户仓库

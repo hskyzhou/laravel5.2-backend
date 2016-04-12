@@ -6,6 +6,8 @@
 	/*仓库*/
 	use RoleRepo;
 	use PermissionRepo;
+	/*第三方应用*/
+	use Hashids;
 
 	class UserRepository{
 		
@@ -80,7 +82,7 @@
 				if(!$users->isEmpty()){
 					foreach($users as $key => $user){
 						$data[$key] = $user->toArray();
-						$data[$key]['status'] = $user->status == config('backend.project.status.open') ? trans('label.status.open') : trans('label.status.close');
+						$data[$key]['status'] = $user->status == config('backend.project.status.open') ? "<span class='label label-success'>".trans('label.status.open') ."</span>" : "<span class='label label-danger'>".trans('label.status.close')."</span>";
 						$data[$key]['button'] = $user->updateButton()->deleteButton(['class' => 'btn btn-danger userdelete'])->getButtonString();
 					}
 				}
@@ -115,5 +117,95 @@
 			}
 
 			return $user;
+		}
+
+		/**
+		 * 通过用户id 获取用户信息		
+		 * 
+		 * @param		
+		 * 
+		 * @author		xezw211@gmail.com
+		 * 
+		 * @date		2016-04-12 10:12:29
+		 * 
+		 * @return		
+		 */
+		public function userinfoById($id, $create = true){
+			if(config('backend.project.encrypt.id')){
+			    $id = Hashids::decode($id);
+			}
+
+			$userInfo = User::where('id', $id)->first();
+
+			if($userInfo && $create){
+				if(config('backend.project.encrypt.id')){
+					$userInfo->encrypt_id = Hashids::encode($userInfo->id);
+				}
+			}
+
+			return $userInfo;
+		}
+
+		/**
+		 * 修改用户信息		
+		 * 
+		 * @param		
+		 * 
+		 * @author		xezw211@gmail.com
+		 * 
+		 * @date		2016-04-12 11:31:05
+		 * 
+		 * @return		
+		 */
+		public function updateUser($id, $userData){
+			$userInfo = $this->userinfoById($id, false);
+
+			if($userInfo){
+				$userInfo->fill($userData)->push();
+			}else{
+				\Log::info('更新用户失败');
+			}
+
+			return $userInfo;
+		}
+
+
+		/**
+		 * 删除用户
+		 * 
+		 * @param		
+		 * 
+		 * @author		xezw211@gmail.com
+		 * 
+		 * @date		2016-04-12 15:03:02
+		 * 
+		 * @return		
+		 */
+		public function deleteUser($id){
+			$returnData = [
+				'result' => true,
+				'title' => trans('label.delete.user.title'),
+				'message' => trans('label.delete.user.success'),
+			];
+			if(config('backend.project.delete.logic')){
+				/*逻辑删除*/
+				if(!$this->updateUser($id, ['status' => config('backend.project.status.close')])){
+					$returnData['result'] = false;
+					$returnData['title'] = trans('label.delete.user.title');
+					$returnData['message'] = trans('label.delete.user.fail');
+				}
+			}else{
+				/*物理删除*/
+				$userInfo = $this->userinfoById($id);
+				if($userInfo){	
+					if(!$userInfo->delete()){
+						$returnData['result'] = false;
+						$returnData['title'] = trans('label.delete.user.title');
+						$returnData['message'] = trans('label.delete.user.fail');
+					}
+				}
+			}
+
+			return $returnData;
 		}
 	}

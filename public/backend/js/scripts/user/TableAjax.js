@@ -62,7 +62,7 @@ var TableAjax = function(){
     });
 
     dt.on('click', '.filter-submit', function(){
-      ajax_datatable.ajax.reload(); 
+      ajax_datatable.ajax.reload();
     });
 
     dt.on('click', '.filter-cancel', function(){
@@ -76,6 +76,49 @@ var TableAjax = function(){
           $(this).attr("checked", false);
       });
       ajax_datatable.ajax.reload();
+    });
+
+
+    /*删除用户*/
+    $(document).on('click', '.userdelete', function(){
+      var $this = $(this);
+      swal({
+        title: title,
+        text: text,
+        type: "error",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: confirmButtonText,
+        cancelButtonText: cancelButtonText,
+        closeOnConfirm: false,
+        closeOnCancel: true },
+        function(isConfirm){ 
+          if (isConfirm) {
+            /*发起删除请求*/
+            $.ajax({
+              url: $this.data('url'),
+              type: 'DELETE',
+              dataType: 'json',
+              headers: {
+                'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+              }
+            })
+            .done(function(data) {
+              if(data.result){
+                ajax_datatable.ajax.reload();
+                swal(data.title, data.message, "success");
+              }else{
+                swal(data.title, data.message, "error");
+              }
+            })
+            .fail(function(response) {
+              var data = response.data;
+              if(response.status == '422'){
+                swal(data.title, data.message, "error");
+              }
+            });
+          }
+      });
     });
 	}
 

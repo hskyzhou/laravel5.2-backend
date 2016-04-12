@@ -22,8 +22,9 @@
         </div>
 
         <div class="portlet-body">
-          <form action="{{route('admin.user.store')}}" class="form-horizontal" method="post">
+          <form action="{{route('admin.user.update', [$userInfo->encrypt_id])}}" class="form-horizontal" method="post">
             {{csrf_field()}}
+            {!! method_field('put') !!}
             <div class="form-body">
               <div class="row">
                 <div class="col-md-4">
@@ -34,20 +35,7 @@
                           <span class="input-group-addon">
                             <i class="fa fa-user"></i>
                           </span>
-                          <input type="text" class="form-control" placeholder="{{trans('database.user.name')}}" name="name">
-                          <div class="form-control-focus"> </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="form-group form-md-line-input has-success">
-                    <label class="col-md-2 control-label" for="form_control_1">{{trans('database.user.password')}}</label>
-                    <div class="col-md-8">
-                      <div class="input-group has-success">
-                          <span class="input-group-addon">
-                            <i class="fa fa-lock"></i>
-                          </span>
-                          <input type="text" class="form-control" placeholder="{{trans('database.user.password')}}" name="password">
+                          <input type="text" class="form-control" placeholder="{{trans('database.user.name')}}" name="name" value="{{$userInfo['name']}}">
                           <div class="form-control-focus"> </div>
                       </div>
                     </div>
@@ -60,7 +48,7 @@
                           <span class="input-group-addon">
                             <i class="fa fa-envelope"></i>
                           </span>
-                          <input type="text" class="form-control" placeholder="{{trans('database.user.email')}}" name="email">
+                          <input type="text" class="form-control" placeholder="{{trans('database.user.email')}}" name="email" value="{{$userInfo['email']}}">
                           <div class="form-control-focus"> </div>
                       </div>
                     </div>
@@ -70,8 +58,8 @@
                     <label class="col-md-2 control-label" for="form_control_1">{{trans('database.user.status')}}</label>
                     <div class="col-md-8">
                       <select class="bs-select form-control form-filter" data-show-subtext="true" name="status">
-                        <option value="{{config('backend.project.status.open')}}" data-content="{{trans('label.status.open')}} <span class='label lable-sm label-success'>OPEN </span>">{{trans('label.status.open')}}</option>
-                        <option value="{{config('backend.project.status.close')}}" data-content="{{trans('label.status.close')}} <span class='label lable-sm label-danger'>CLOSE </span>">{{trans('label.status.close')}}</option>
+                        <option value="{{config('backend.project.status.open')}}" data-content="{{trans('label.status.open')}} <span class='label lable-sm label-success'>OPEN </span>" @if($userInfo['status'] == config('backend.project.status.open')) selected @endif>{{trans('label.status.open')}}</option>
+                        <option value="{{config('backend.project.status.close')}}" data-content="{{trans('label.status.close')}} <span class='label lable-sm label-danger'>CLOSE </span>" @if($userInfo['status'] == config('backend.project.status.close')) selected @endif>{{trans('label.status.close')}}</option>
                       </select>
                     </div>
                   </div>
@@ -81,7 +69,7 @@
                     <div class="col-md-8">
                       <select id="select2-multiple-input-lg" class="form-control input-lg select2-multiple" name="roles[]" multiple>
                         @forelse($roles as $role)
-                          <option value="{{$role->slug}}">{{$role->name}}</option>
+                          <option value="{{$role->slug}}" @if(in_array($role->slug, $userRoleSlugs)) selected @endif>{{$role->name}}</option>
                         @empty
                         @endforelse
                       </select>
@@ -111,7 +99,7 @@
                           @if(is_array($permission))
                             @foreach($permission as $sonPermission)
                               <label style="margin-left:30px;">
-                                <input type="checkbox" class="icheck soncheckbox" data-checkbox="icheckbox_square-grey" value="{{$sonPermission['value']}}" name="permissions[]">{{$sonPermission['name']}}
+                                <input type="checkbox" class="icheck soncheckbox" data-checkbox="icheckbox_square-grey" value="{{$sonPermission['value']}}" name="permissions[]" @if(in_array($sonPermission['value'], $userPermissionSlugs)) checked @endif>{{$sonPermission['name']}}
                               </label>
                             @endforeach
                           @endif   

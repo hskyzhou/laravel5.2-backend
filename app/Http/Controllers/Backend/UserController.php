@@ -11,12 +11,13 @@ use App\Http\Controllers\Controller;
 use UserRepo;
 use RoleRepo;
 use PermissionRepo;
-
 /*Request*/
 use App\Http\Requests\UserRequest;
 /*Event*/
 use App\Events\Backend\AddRoleEvent;
 use App\Events\Backend\AddPermissionEvent;
+/*第三方库*/
+use Hashids, Flash, JavaScript;
 
 class UserController extends Controller
 {
@@ -25,6 +26,15 @@ class UserController extends Controller
     }
 
     public function index(){
+        JavaScript::put([
+            'title' => trans('label.sweet.title'),
+            'text' => trans('label.sweet.text'),
+            'confirmButtonText' => trans('label.sweet.confirmButtonText'),
+            'cancelButtonText' => trans('label.sweet.cancelButtonText'),
+            'deleteSuccessTitle' => trans('label.sweet.deleteSuccessTitle'),
+            'deleteSuccessText' => trans('label.sweet.deleteSuccessText'),
+        ]);
+
         return view('backend.user.index');
     }
 
@@ -37,11 +47,11 @@ class UserController extends Controller
      * 
      * @param		
      * 
-     * @author		xezw211@gmail.com
+     * @author      xezw211@gmail.com
      * 
-     * @date		2016-04-06 16:50:42
+     * @date        2016-04-06 16:50:42
      * 
-     * @return		
+     * @return      
      */
     public function adminAjaxUserList(){
         $returnData = UserRepo::searchUserList();
@@ -92,6 +102,7 @@ class UserController extends Controller
             /*添加用户权限*/
             $permissions = PermissionRepo::getPermissionsBySlug(request('permissions', []));
             event(new AddPermissionEvent($user, $permissions));
+            Flash::info('添加用户成功');
         }
 
         return redirect()->route('admin.user.index');
@@ -108,18 +119,53 @@ class UserController extends Controller
      * 
      * @return        
      */
-    public function edit(){
+    public function edit($id){
         return view('backend.user.index');
     }
 
-    public function ngEdit(){
+    public function ngEdit($id){
+        if(empty($id)){
+            abort(404);
+        }
+        
         /*角色列表*/
         $roles = RoleRepo::all();
 
         /*权限列表*/
         $permissions = PermissionRepo::bkPermissionList();
 
-        return view('backend.user.ngedit', compact('roles', 'permissions'));
+        /*用户信息*/
+        $userInfo = UserRepo::userinfoById($id);
+        $userRoleSlugs = RoleRepo::userRoleSlugs($userInfo);
+        $userPermissionSlugs = PermissionRepo::userPermissionSlugs($userInfo);
+
+        return view('backend.user.ngedit', compact('roles', 'permissions', 'userInfo', 'userRoleSlugs', 'userPermissionSlugs'));
+    }
+
+    public function update(UserRequest $userRequest, $id){
+        $userData = [
+            'name' => request('name', ''),
+            'email' => request('email', ''),
+            'status' => request('status', config('project.status.open')),
+        ];
+
+        $user = UserRepo::updateUser($id, $userData);
+
+        if($user){
+            /*添加用户角色*/
+            $roles = RoleRepo::getRolesBySlug(request('roles', []));
+            /*删除用户所有角色*/
+            RoleRepo::detachUserRoles($user);
+            event(new AddRoleEvent($user, $roles));
+            /*添加用户权限*/
+            $permissions = PermissionRepo::getPermissionsBySlug(request('permissions', []));
+            /*删除用户所有权限*/
+            PermissionRepo::detachUserPermissions($user);
+            event(new AddPermissionEvent($user, $permissions));
+            Flash::info('修改用户成功');
+        }
+
+        return redirect()->route('admin.user.index');
     }
 
     /**
@@ -133,7 +179,7 @@ class UserController extends Controller
      * 
      * @return        
      */
-    public function destory(){
-        
+    public function destroy($id){
+        return UserRepo::deleteUser($id);
     }
 }
