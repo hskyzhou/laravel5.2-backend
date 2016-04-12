@@ -162,11 +162,9 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', '$locationProvider',
                                 'backend/plugins/bootstrap-select/css/bootstrap-select.min.css',
                                 'backend/plugins/sweetalert/dist/sweetalert.css',
 
-                                
                                 'backend/global/plugins/datatables/datatables.all.min.js',
                                 'backend/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js',
                                 'backend/plugins/bootstrap-select/js/bootstrap-select.min.js',
-                                'backend/plugins/ngSweetAlert/SweetAlert.min.js',
                                 'backend/plugins/sweetalert/dist/sweetalert.min.js',
 
                                 'backend/js/scripts/user/TableAjax.js',
