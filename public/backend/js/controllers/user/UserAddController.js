@@ -1,7 +1,10 @@
-angular.module('MetronicApp').controller('UserAddController', function($rootScope, $scope, $http, $timeout) {
+angular.module('MetronicApp').controller('UserAddController', ['$rootScope', '$scope', '$http', '$timeout', function($rootScope, $scope, $http, $timeout) {
+    
     $scope.$on('$viewContentLoaded', function() {   
         // initialize core components
         App.initAjax();
+
+        $scope.name = '';
 
         /*bs select*/
         $(".bs-select").selectpicker({
@@ -45,10 +48,25 @@ angular.module('MetronicApp').controller('UserAddController', function($rootScop
             $('.soncheckbox').iCheck('toggle');
         };
 
+        $scope.create = function(){
+            console.log($scope.name);
+            return false;
+            // $http({
+            //   method: 'POST',
+            //   url: '/'
+            // }).then(function(response) {
+            //     // this callback will be called asynchronously
+            //     // when the response is available
+
+            // }, function(response) {
+            //     // called asynchronously if an error occurs
+            //     // or server returns response with an error status.
+            // });
+        }
     });
 
     // set sidebar closed and body solid layout mode
     $rootScope.settings.layout.pageContentWhite = true;
     $rootScope.settings.layout.pageBodySolid = false;
     $rootScope.settings.layout.pageSidebarClosed = false;
-});
+}]);

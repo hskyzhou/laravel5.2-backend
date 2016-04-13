@@ -34,7 +34,7 @@
                           <span class="input-group-addon">
                             <i class="fa fa-user"></i>
                           </span>
-                          <input type="text" class="form-control" placeholder="{{trans('database.user.name')}}" name="name" value="{{old('name')}}">
+                          <input type="text" class="form-control" placeholder="{{trans('database.user.name')}}" name="name" ng-model="name">
                           <div class="form-control-focus"> </div>
                       </div>
                     </div>
@@ -90,7 +90,7 @@
 
                   <div class="form-group form-md-line-input has-success">
                     <div class="col-md-4 col-md-offset-2">
-                      <button class="btn btn-success">提交</button>
+                      <a class="btn btn-success" ng-click="create()">提交</a>
                     </div>
                   </div>
                 </div>
@@ -128,4 +128,5 @@
       </div>
     </div>
   </div>
+  @{{name}}
 </div>
