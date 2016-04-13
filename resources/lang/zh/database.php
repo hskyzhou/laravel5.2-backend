@@ -9,6 +9,7 @@
 			'created_at' => '创建时间',
 			'updated_at' => '修改时间',
 			'role' => '角色',
+			'permission' => '权限',
 		]
 
 	];

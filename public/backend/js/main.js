@@ -161,11 +161,13 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', '$locationProvider',
                                 'backend/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css',
                                 'backend/plugins/bootstrap-select/css/bootstrap-select.min.css',
                                 'backend/plugins/sweetalert/dist/sweetalert.css',
+                                'backend/plugins/icheck/skins/all.css',
 
                                 'backend/global/plugins/datatables/datatables.all.min.js',
                                 'backend/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js',
                                 'backend/plugins/bootstrap-select/js/bootstrap-select.min.js',
                                 'backend/plugins/sweetalert/dist/sweetalert.min.js',
+                                'backend/plugins/icheck/icheck.min.js',
 
                                 'backend/js/scripts/user/TableAjax.js',
                                 'backend/js/controllers/user/UserController.js',

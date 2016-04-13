@@ -34,7 +34,7 @@
                           <span class="input-group-addon">
                             <i class="fa fa-user"></i>
                           </span>
-                          <input type="text" class="form-control" placeholder="{{trans('database.user.name')}}" name="name">
+                          <input type="text" class="form-control" placeholder="{{trans('database.user.name')}}" name="name" value="{{old('name')}}">
                           <div class="form-control-focus"> </div>
                       </div>
                     </div>
@@ -47,7 +47,7 @@
                           <span class="input-group-addon">
                             <i class="fa fa-lock"></i>
                           </span>
-                          <input type="text" class="form-control" placeholder="{{trans('database.user.password')}}" name="password">
+                          <input type="password" class="form-control" placeholder="{{trans('database.user.password')}}" name="password" value="{{old('password')}}">
                           <div class="form-control-focus"> </div>
                       </div>
                     </div>
@@ -60,7 +60,7 @@
                           <span class="input-group-addon">
                             <i class="fa fa-envelope"></i>
                           </span>
-                          <input type="text" class="form-control" placeholder="{{trans('database.user.email')}}" name="email">
+                          <input type="email" class="form-control" placeholder="{{trans('database.user.email')}}" name="email" value="{{old('email')}}">
                           <div class="form-control-focus"> </div>
                       </div>
                     </div>

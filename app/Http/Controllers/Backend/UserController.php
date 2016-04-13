@@ -182,4 +182,20 @@ class UserController extends Controller
     public function destroy($id){
         return UserRepo::deleteUser($id);
     }
+
+    /**
+     * 删除多个用户
+     * 
+     * @param        
+     * 
+     * @author        wen.zhou@bioon.com
+     * 
+     * @date        2016-04-13 15:34:55
+     * 
+     * @return        
+     */
+    public function deletes(){
+        $ids = request('ids', []);
+        return UserRepo::deleteUsers($ids);
+    }
 }

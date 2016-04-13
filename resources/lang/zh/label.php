@@ -1,8 +1,11 @@
 <?php
 	return [
 		'action' => '操作',
-
-		'add' => '添加',
+		
+		'button' => [
+			'add' => '添加',
+			'delete' => '删除',
+		],
 
 		'user' => '用户',
 		'role' => '角色',

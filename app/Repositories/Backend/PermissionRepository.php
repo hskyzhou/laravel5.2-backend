@@ -69,7 +69,7 @@
 		}
 
 		/**
-		 * 获取用户权限
+		 * 获取用户单独权限
 		 * 
 		 * @param		
 		 * 
@@ -80,11 +80,11 @@
 		 * @return		
 		 */
 		public function userPermissions($user){
-			return $user->getPermissions();
+			return $user->userPermissions()->get();
 		}
 
 		/**
-		 * 获取 用户权限的slug
+		 * 获取 用户单独权限的slug
 		 * 
 		 * @param		
 		 * 
@@ -105,6 +105,85 @@
 
 			return $userPermissionSlugs;
 		}
+
+		/**
+		 * 获取 角色权限
+		 * 
+		 * @param		
+		 * 
+		 * @author		wen.zhou@bioon.com
+		 * 
+		 * @date		2016-04-13 13:57:22
+		 * 
+		 * @return		
+		 */
+		public function rolePermissions($role){
+			return $role->permissions()->get();
+		}
+
+		/**
+		 * 获取角色权限的名称
+		 * 
+		 * @param		
+		 * 
+		 * @author		wen.zhou@bioon.com
+		 * 
+		 * @date		2016-04-13 13:58:19
+		 * 
+		 * @return		
+		 */
+		public function rolePermissionName($role){
+			$rolePermissionNames = [];
+
+			$rolePermissions = $this->rolePermissions($role);
+
+			if(!$rolePermissions->isEmpty()){
+				$rolePermissionNames = $rolePermissions->keyBy('name')->keys()->toArray();
+			}
+
+			return $rolePermissionNames;
+
+		}
+
+		/**
+		 * 获取 用户所有权限
+		 * 
+		 * @param		
+		 * 
+		 * @author		xezw211@gmail.com
+		 * 
+		 * @date		2016-04-13 11:11:13
+		 * 
+		 * @return		
+		 */
+		public function userAllPermissions($user){
+			return $user->getPermissions();
+		}
+
+		/**
+		 * 获取用户所有权限的name
+		 * 
+		 * @param		
+		 * 
+		 * @author		xezw211@gmail.com
+		 * 
+		 * @date		2016-04-13 11:11:55
+		 * 
+		 * @return		
+		 */
+		public function userAllPermissionKeys($user, $key = 'name'){
+			$userAllPermissionSlugs = [];
+
+			$userPermissions = $this->userAllPermissions($user);
+			
+			if(!$userPermissions->isEmpty()){
+				$userAllPermissionSlugs = $userPermissions->keyBy($key)->keys()->toArray();
+			}
+
+			return $userAllPermissionSlugs;
+		}
+		
+		
 
 		/**
 		 * 删除用户所有权限

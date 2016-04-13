@@ -74,6 +74,29 @@
 		}
 
 		/**
+		 * 获取 用户角色名称
+		 * 
+		 * @param		
+		 * 
+		 * @author		xezw211@gmail.com
+		 * 
+		 * @date		2016-04-13 11:06:18
+		 * 
+		 * @return		
+		 */
+		public function userRoleNames($user){
+			$userRoleSlugs = [];
+
+			$userRoles = $this->userRoles($user);
+
+			if(!$userRoles->isEmpty()){
+				$userRoleSlugs = $userRoles->keyBy('name')->keys()->toArray();
+			}
+
+			return $userRoleSlugs;
+		}
+
+		/**
 		 * 删除用户 所有角色
 		 * 
 		 * @param		

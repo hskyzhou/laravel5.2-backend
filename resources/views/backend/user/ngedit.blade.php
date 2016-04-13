@@ -84,7 +84,7 @@
                 </div>
 
                 <div class="col-md-8">
-                  <div class="row margin-bottom-10">
+                  <div class="row margin-bottom-20">
                     <a class="btn btn-success" ng-click="selectAll()">全选</a>
                     <a class="btn btn-success" ng-click="selectInverse()">反选</a>
                   </div>

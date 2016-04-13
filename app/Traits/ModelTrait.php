@@ -29,7 +29,7 @@
 				'class' => 'btn btn-success',
 			];
 			$options = array_merge($defaultOptions, $options);
-			$this->buttonString .= "<a href='{$options['url']}' class='{$options['class']}'>{$options['name']}</a>";
+			$this->buttonString .= "<a href='{$options['url']}' class='tooltips {$options['class']}' data-container='body' data-trigger='hover' data-placement='top' data-content='' data-original-title='{$options['name']}'>{$options['name']}</a>";
 			return $this;
 		}
 
@@ -55,7 +55,7 @@
 				'class' => 'btn btn-warning',
 			];
 			$options = array_merge($defaultOptions, $options);
-			$this->buttonString .= "<a href='{$options['url']}' class='{$options['class']}'>{$options['name']}</a>";
+			$this->buttonString .= "<a href='{$options['url']}' class='tooltips margin-bottom-5 {$options['class']}' data-container='body' data-trigger='hover' data-placement='top' data-content='' data-original-title='{$options['name']}'><i class='fa fa-edit'></i>{$options['name']}</a>";
 			return $this;
 		}
 
@@ -81,7 +81,7 @@
 				'class' => 'btn btn-danger',
 			];
 			$options = array_merge($defaultOptions, $options);
-			$this->buttonString .= "<a class='{$options['class']}' data-url='{$options['url']}'>{$options['name']}</a>";
+			$this->buttonString .= "<a data-url='{$options['url']}' class='tooltips margin-bottom-5 {$options['class']}' data-container='body' data-trigger='hover' data-placement='top' data-content='' data-original-title='{$options['name']}'><i class='fa fa-remove'></i>{$options['name']}</a>";
 			return $this;
 		}
 	}

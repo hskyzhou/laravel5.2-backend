@@ -7,7 +7,7 @@
 	use RoleRepo;
 	use PermissionRepo;
 	/*第三方应用*/
-	use Hashids;
+	use Hashids, DB;
 
 	class UserRepository{
 		
@@ -81,9 +81,31 @@
 				$users = $user->get();
 				if(!$users->isEmpty()){
 					foreach($users as $key => $user){
-						$data[$key] = $user->toArray();
+						$data[$key] = $this->setEncryptId($user)->toArray();
 						$data[$key]['status'] = $user->status == config('backend.project.status.open') ? "<span class='label label-success'>".trans('label.status.open') ."</span>" : "<span class='label label-danger'>".trans('label.status.close')."</span>";
+						$data[$key]['roles'] = '';
+						$data[$key]['permissions'] = '';
 						$data[$key]['button'] = $user->updateButton()->deleteButton(['class' => 'btn btn-danger userdelete'])->getButtonString();
+
+						$roles = RoleRepo::userRoles($user);
+						if($roles && !$roles->isEmpty()){
+							foreach($roles as $role){
+								$rolePermissionNames = PermissionRepo::rolePermissionName($role);
+								$rolePermissionsBody = implode("<br />", $rolePermissionNames);
+								$rolePermissionsTitle = $role->name;
+
+								$data[$key]['roles'] .= "<button class='btn grey-mint popovers margin-bottom-5' data-container='body' data-trigger='hover' data-placement='right' data-content='{$rolePermissionsBody}' data-original-title='{$rolePermissionsTitle}'>{$rolePermissionsTitle}</button>";
+							}
+						}
+
+						$permissions = PermissionRepo::userAllPermissionKeys($user, 'name');
+						if($permissions){
+							$permission_body = implode("<br />", $permissions);
+							$permission_title  = trans('database.user.permission');
+							$data[$key]['permissions'] = "<button class='btn grey-mint popovers margin-bottom-5' data-container='body' data-trigger='hover' data-placement='right' data-content='{$permission_body}' data-original-title='{$permission_title}'>{$permission_title}</button>";
+
+
+						}
 					}
 				}
 
@@ -122,7 +144,9 @@
 		/**
 		 * 通过用户id 获取用户信息		
 		 * 
-		 * @param		
+		 * @param		id  获取用户的id
+		 * @param 		select  获取的用户对象是否增加加密id
+		 * @param 		decode  对用户的id是否需要解密
 		 * 
 		 * @author		xezw211@gmail.com
 		 * 
@@ -130,17 +154,14 @@
 		 * 
 		 * @return		
 		 */
-		public function userinfoById($id, $create = true){
-			if(config('backend.project.encrypt.id')){
-			    $id = Hashids::decode($id);
-			}
+		public function userinfoById($id, $select = true, $decode = true){
+			$userInfo = false;
 
-			$userInfo = User::where('id', $id)->first();
+			$id = $this->decodeEncryptId($id, $decode);
 
-			if($userInfo && $create){
-				if(config('backend.project.encrypt.id')){
-					$userInfo->encrypt_id = Hashids::encode($userInfo->id);
-				}
+			if(!empty($id)){
+				$userInfo = User::where('id', $id)->first();
+				$this->setEncryptId($userInfo, $select);
 			}
 
 			return $userInfo;
@@ -203,9 +224,89 @@
 						$returnData['title'] = trans('label.delete.user.title');
 						$returnData['message'] = trans('label.delete.user.fail');
 					}
+				}else{
+					$returnData['result'] = false;
+					$returnData['title'] = trans('label.delete.user.title');
+					$returnData['message'] = trans('label.delete.user.fail');
 				}
 			}
 
 			return $returnData;
+		}
+
+		/**
+		 * 删除多个用户
+		 * 
+		 * @param		
+		 * 
+		 * @author		xezw211@gmail.com
+		 * 
+		 * @date		2016-04-13 15:36:04
+		 * 
+		 * @return		
+		 */
+		public function deleteUsers($ids){
+			$deleteInfo = [
+				'result' => true,
+				'title' => trans('label.delete.user.title'),
+				'message' => trans('label.delete.user.success'),
+			];
+
+			if(!empty($ids) && is_array($ids)){
+				DB::beginTransaction();
+				foreach($ids as $id){
+					$deleteInfo = $this->deleteUser($id);
+					if(!$deleteInfo['result']){
+						DB::rollBack();
+						break;
+					}
+				}
+				DB::commit();
+			}
+
+			return $deleteInfo;
+		}
+
+
+		/*===========================================私有方法========================*/
+		/**
+		 * 用户对象增加加密id
+		 * 
+		 * @param		
+		 * 
+		 * @author		xezw211@gmail.com
+		 * 
+		 * @date		2016-04-13 16:21:55
+		 * 
+		 * @return		
+		 */
+		private function setEncryptId($userInfo, $select = true){
+			if($userInfo && $select){
+				if(config('backend.project.encrypt.id')){
+					$userInfo->encrypt_id = Hashids::encode($userInfo->id);
+				}
+			}
+			return $userInfo;
+		}
+
+		/**
+		 * 破解 id
+		 * 
+		 * @param		
+		 * 
+		 * @author		xezw211@gmail.com
+		 * 
+		 * @date		2016-04-13 16:21:47
+		 * 
+		 * @return		
+		 */
+		private function decodeEncryptId($id, $decode = true){
+			if(config('backend.project.encrypt.id') && $decode){
+			    $id = Hashids::decode($id);
+			    if(!empty($id)){
+			    	$id = $id[0];
+			    }
+			}
+			return $id;
 		}
 	}
