@@ -197,6 +197,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', '$locationProvider',
                             'backend/plugins/bootstrap-select/js/bootstrap-select.min.js',
                             'backend/plugins/select2/js/select2.full.min.js',
                             'backend/plugins/icheck/icheck.min.js',
+                            'backend/plugins/bootstrap-growl/jquery.bootstrap-growl.min.js',
 
                             'backend/js/controllers/user/UserAddController.js',
                         ]

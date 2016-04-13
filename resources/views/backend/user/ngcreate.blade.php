@@ -47,7 +47,7 @@
                           <span class="input-group-addon">
                             <i class="fa fa-lock"></i>
                           </span>
-                          <input type="password" class="form-control" placeholder="{{trans('database.user.password')}}" name="password" value="{{old('password')}}">
+                          <input type="password" class="form-control" placeholder="{{trans('database.user.password')}}" name="password" ng-model="password">
                           <div class="form-control-focus"> </div>
                       </div>
                     </div>
@@ -60,7 +60,7 @@
                           <span class="input-group-addon">
                             <i class="fa fa-envelope"></i>
                           </span>
-                          <input type="email" class="form-control" placeholder="{{trans('database.user.email')}}" name="email" value="{{old('email')}}">
+                          <input type="email" class="form-control" placeholder="{{trans('database.user.email')}}" name="email" ng-model="email">
                           <div class="form-control-focus"> </div>
                       </div>
                     </div>
@@ -69,7 +69,7 @@
                   <div class="form-group form-md-line-input has-success">
                     <label class="col-md-2 control-label" for="form_control_1">{{trans('database.user.status')}}</label>
                     <div class="col-md-8">
-                      <select class="bs-select form-control form-filter" data-show-subtext="true" name="status">
+                      <select class="bs-select form-control form-filter" data-show-subtext="true" name="status" ng-model="status">
                         <option value="{{config('backend.project.status.open')}}" data-content="{{trans('label.status.open')}} <span class='label lable-sm label-success'>OPEN </span>">{{trans('label.status.open')}}</option>
                         <option value="{{config('backend.project.status.close')}}" data-content="{{trans('label.status.close')}} <span class='label lable-sm label-danger'>CLOSE </span>">{{trans('label.status.close')}}</option>
                       </select>
@@ -79,7 +79,7 @@
                   <div class="form-group form-md-line-input has-success">
                     <label class="col-md-2 control-label" for="form_control_1">{{trans('database.user.role')}}</label>
                     <div class="col-md-8">
-                      <select id="select2-multiple-input-lg" class="form-control input-lg select2-multiple" name="roles[]" multiple>
+                      <select id="select2-multiple-input-lg" class="form-control input-lg select2-multiple" name="roles[]" multiple ng-model="roles">
                         @forelse($roles as $role)
                           <option value="{{$role->slug}}">{{$role->name}}</option>
                         @empty
@@ -128,5 +128,4 @@
       </div>
     </div>
   </div>
-  @{{name}}
 </div>

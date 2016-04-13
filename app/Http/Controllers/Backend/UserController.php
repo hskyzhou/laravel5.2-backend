@@ -59,7 +59,6 @@ class UserController extends Controller
         return response()->json($returnData);
     }
 
-
     /**
      * 创建用户
      * 
@@ -72,6 +71,9 @@ class UserController extends Controller
      * @return        
      */
     public function create(){
+        JavaScript::put([
+            'storeUrl' => route('admin.user.store'),
+        ]);
         return view('backend.user.index');
     }
 
@@ -86,6 +88,11 @@ class UserController extends Controller
     }
 
     public function store(UserRequest $userRequest){
+        $returnData = [
+            'result' => false,
+            'message' => '添加用户失败'
+        ];
+
         $userData = [
             'name' => request('name', ''),
             'email' => request('email', ''),
@@ -102,10 +109,14 @@ class UserController extends Controller
             /*添加用户权限*/
             $permissions = PermissionRepo::getPermissionsBySlug(request('permissions', []));
             event(new AddPermissionEvent($user, $permissions));
-            Flash::info('添加用户成功');
+
+            $returnData = [
+                'result' => true,
+                'message' => '添加用户成功'
+            ];
         }
 
-        return redirect()->route('admin.user.index');
+        return response()->json($returnData);
     }
 
     /**
