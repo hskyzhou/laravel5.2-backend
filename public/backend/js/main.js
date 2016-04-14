@@ -193,11 +193,14 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', '$locationProvider',
                             'backend/plugins/select2/css/select2.min.css',
                             'backend/plugins/select2/css/select2-bootstrap.min.css',
                             'backend/plugins/icheck/skins/all.css',
+                            'backend/plugins/sweetalert/dist/sweetalert.css',
 
                             'backend/plugins/bootstrap-select/js/bootstrap-select.min.js',
                             'backend/plugins/select2/js/select2.full.min.js',
                             'backend/plugins/icheck/icheck.min.js',
                             'backend/plugins/bootstrap-growl/jquery.bootstrap-growl.min.js',
+                            'backend/plugins/sweetalert/dist/sweetalert.min.js',
+                            'backend/plugins/ngSweetAlert/SweetAlert.min.js',
 
                             'backend/js/controllers/user/UserAddController.js',
                         ]
@@ -314,7 +317,6 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', '$locationProvider',
                 }]
             }
         })
-
 }]);
 
 /* Init global settings and run the app */

@@ -205,15 +205,15 @@
 		public function deleteUser($id){
 			$returnData = [
 				'result' => true,
-				'title' => trans('label.delete.user.title'),
-				'message' => trans('label.delete.user.success'),
+				'title' => trans('label.prompt.user.delete.after.title'),
+				'message' => trans('label.prompt.user.delete.after.success'),
 			];
 			if(config('backend.project.delete.logic')){
 				/*逻辑删除*/
 				if(!$this->updateUser($id, ['status' => config('backend.project.status.close')])){
 					$returnData['result'] = false;
-					$returnData['title'] = trans('label.delete.user.title');
-					$returnData['message'] = trans('label.delete.user.fail');
+					$returnData['title'] = trans('label.prompt.user.delete.after.title');
+					$returnData['message'] = trans('label.prompt.user.delete.after.fail');
 				}
 			}else{
 				/*物理删除*/
@@ -221,13 +221,13 @@
 				if($userInfo){	
 					if(!$userInfo->delete()){
 						$returnData['result'] = false;
-						$returnData['title'] = trans('label.delete.user.title');
-						$returnData['message'] = trans('label.delete.user.fail');
+						$returnData['title'] = trans('label.prompt.user.delete.after.title');
+						$returnData['message'] = trans('label.prompt.user.delete.after.fail');
 					}
 				}else{
 					$returnData['result'] = false;
-					$returnData['title'] = trans('label.delete.user.title');
-					$returnData['message'] = trans('label.delete.user.fail');
+					$returnData['title'] = trans('label.prompt.user.delete.after.title');
+					$returnData['message'] = trans('label.prompt.user.delete.after.fail');
 				}
 			}
 
@@ -248,8 +248,8 @@
 		public function deleteUsers($ids){
 			$deleteInfo = [
 				'result' => true,
-				'title' => trans('label.delete.user.title'),
-				'message' => trans('label.delete.user.success'),
+				'title' => trans('label.prompt.user.delete.after.title'),
+				'message' => trans('label.prompt.user.delete.after.success'),
 			];
 
 			if(!empty($ids) && is_array($ids)){

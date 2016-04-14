@@ -1,4 +1,5 @@
 <div ng-controller="UserAddController">
+  <div ng-init="jsVars = {{$jsVars}}"></div>
   <div class="row">
     <div class="col-md-12">
       <!-- BEGIN VALIDATION STATES-->
@@ -34,7 +35,7 @@
                           <span class="input-group-addon">
                             <i class="fa fa-user"></i>
                           </span>
-                          <input type="text" class="form-control" placeholder="{{trans('database.user.name')}}" name="name" ng-model="name">
+                          <input type="text" class="form-control" placeholder="{{trans('database.user.name')}}" name="name" ng-model="userData.name">
                           <div class="form-control-focus"> </div>
                       </div>
                     </div>
@@ -47,7 +48,7 @@
                           <span class="input-group-addon">
                             <i class="fa fa-lock"></i>
                           </span>
-                          <input type="password" class="form-control" placeholder="{{trans('database.user.password')}}" name="password" ng-model="password">
+                          <input type="password" class="form-control" placeholder="{{trans('database.user.password')}}" name="password" ng-model="userData.password">
                           <div class="form-control-focus"> </div>
                       </div>
                     </div>
@@ -60,7 +61,7 @@
                           <span class="input-group-addon">
                             <i class="fa fa-envelope"></i>
                           </span>
-                          <input type="email" class="form-control" placeholder="{{trans('database.user.email')}}" name="email" ng-model="email">
+                          <input type="email" class="form-control" placeholder="{{trans('database.user.email')}}" name="email" ng-model="userData.email">
                           <div class="form-control-focus"> </div>
                       </div>
                     </div>
@@ -69,7 +70,7 @@
                   <div class="form-group form-md-line-input has-success">
                     <label class="col-md-2 control-label" for="form_control_1">{{trans('database.user.status')}}</label>
                     <div class="col-md-8">
-                      <select class="bs-select form-control form-filter" data-show-subtext="true" name="status" ng-model="status">
+                      <select id="statusselect" class="bs-select form-control form-filter" data-show-subtext="true" name="status">
                         <option value="{{config('backend.project.status.open')}}" data-content="{{trans('label.status.open')}} <span class='label lable-sm label-success'>OPEN </span>">{{trans('label.status.open')}}</option>
                         <option value="{{config('backend.project.status.close')}}" data-content="{{trans('label.status.close')}} <span class='label lable-sm label-danger'>CLOSE </span>">{{trans('label.status.close')}}</option>
                       </select>
@@ -79,12 +80,13 @@
                   <div class="form-group form-md-line-input has-success">
                     <label class="col-md-2 control-label" for="form_control_1">{{trans('database.user.role')}}</label>
                     <div class="col-md-8">
-                      <select id="select2-multiple-input-lg" class="form-control input-lg select2-multiple" name="roles[]" multiple ng-model="roles">
+                      <select id="select2-multiple-input-lg" class="form-control input-lg select2-multiple" name="roles[]" multiple ng-model="userData.roles">
                         @forelse($roles as $role)
                           <option value="{{$role->slug}}">{{$role->name}}</option>
                         @empty
                         @endforelse
                       </select>
+
                     </div>
                   </div>
 
@@ -96,7 +98,7 @@
                 </div>
 
                 <div class="col-md-8">
-                  <div class="row margin-bottom-10">
+                  <div class="row margin-bottom-20">
                     <a class="btn btn-success" ng-click="selectAll()">全选</a>
                     <a class="btn btn-success" ng-click="selectInverse()">反选</a>
                   </div>

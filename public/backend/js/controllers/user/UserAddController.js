@@ -1,24 +1,29 @@
-angular.module('MetronicApp').controller('UserAddController', ['$rootScope', '$scope', '$http', '$timeout', function($rootScope, $scope, $http, $timeout) {
-    
-    $scope.$on('$viewContentLoaded', function() {   
-        $scope.name = '';
-        $scope.email = '';
-        $scope.password = '';
-        $scope.status = 1;
-        $scope.roles = [];
-        $scope.permissions = [];
+angular.module('MetronicApp').controller('UserAddController', ['$rootScope', '$scope', '$http', '$timeout', 'SweetAlert', '$location', function($rootScope, $scope, $http, $timeout, SweetAlert, $location) {
 
+    $scope.$on('$viewContentLoaded', function() {   
+        $scope.userData = {};
+        $scope.userData.name = '';
+        $scope.userData.password = '';
+        $scope.userData.email = '';
+        $scope.userData.status = 1;
+        $scope.userData.roles = [];
+        $scope.userData.permissions = [];
+        
         // initialize core components
         App.initAjax();
 
         /*bs select*/
         $(".bs-select").selectpicker({
-          iconBase:"fa",tickIcon:"fa-check"
+          iconBase:"fa",
+          tickIcon:"fa-check"
         });
+
+        $('#statusselect').selectpicker('val', $scope.userData.status);
 
         /*select2-multiple*/
         $(".select2, .select2-multiple").select2({
           placeholder: '选择角色',
+          allowClear: true,
         });
 
         /*icheck选择*/
@@ -35,15 +40,21 @@ angular.module('MetronicApp').controller('UserAddController', ['$rootScope', '$s
             var $this = $(this);
             var $parentCheck = $this.parents('.icheck-list').find('.parentcheckbox');
             if(event.type == 'ifChecked'){
-                $scope.permissions.push(this.value);
+                $scope.userData.permissions.push(this.value);
                 $parentCheck.prop('checked', true).iCheck('update');
             }else if(event.type == 'ifUnchecked'){
-                $scope.permissions.splice($scope.permissions.indexOf(this.value),1);
+                $scope.userData.permissions.splice($scope.userData.permissions.indexOf(this.value),1);
                 var length = $this.parents('.icheck-list').find('.soncheckbox:checked').length;
                 if(length == 0){
                     $parentCheck.prop('checked', false).iCheck('update');
                 }
             }
+        });
+
+        /*bs-select 修改*/
+        $("#statusselect").on('changed.bs.select', function(event){
+            $this = $(this);
+            $scope.userData.status = $this.val();
         });
 
         /*全选 , 反选*/
@@ -58,32 +69,46 @@ angular.module('MetronicApp').controller('UserAddController', ['$rootScope', '$s
         $scope.create = function(){
             $http({
               method: 'POST',
-              url: storeUrl,
+              url: this.jsVars.storeUrl,
               data : {
-                name : this.name,
-                email : this.email,
-                password : this.password,
-                status : this.status,
-                roles : this.roles,
-                permissions : this.permissions,
+                name : $scope.userData.name,
+                email : $scope.userData.email,
+                password : $scope.userData.password,
+                status : $scope.userData.status,
+                roles : $scope.userData.roles,
+                permissions : $scope.userData.permissions,
               },
             }).then(function(response) {
                 // this callback will be called asynchronously
                 // when the response is available
                 var data = response.data;
                 if(data.result){
-                    $.bootstrapGrowl(data.message, {
-                      ele: 'body', // which element to append to
-                      type: 'danger', // (null, 'info', 'danger', 'success')
-                      offset: {from: 'top', amount: 20}, // 'top', or 'bottom'
-                      align: 'center', // ('left', 'right', or 'center')
-                      width: 450, // (integer, or 'auto')
-                      delay: 5000, // Time while the message will be displayed. It's not equivalent to the *demo* timeOut!
-                      allow_dismiss: true, // If true then will display a cross to close the popup.
-                      stackup_spacing: 10 // spacing between consecutively stacked growls.
-                    });
+                    /*弹出用户是否需要继续添加，或者返回列表页*/
+                    SweetAlert.swal({
+                       title: data.title,
+                       text: data.text,
+                       type: "success",
+                       showCancelButton: true,
+                       confirmButtonColor: "#DD6B55",confirmButtonText: data.confirm,
+                       cancelButtonText: data.cancel,
+                       closeOnConfirm: true,
+                       closeOnCancel: true}, 
+                        function(isConfirm){ 
+                           if (isConfirm) {
+                                $scope.userData.name = '';
+                                $scope.userData.password = '';
+                                $scope.userData.email = '';
+                                $scope.userData.status = 1;
+                                $scope.userData.roles = [];
+                                $(".soncheckbox").iCheck('uncheck');//清空权限选择
+                                $(".select2, .select2-multiple").val('').trigger('change.select2');//清空角色选择
+                                $('#statusselect').selectpicker('val', $scope.userData.status);//重置为开启
+                           } else {
+                                $location.path(data.indexUrlPath);
+                           }
+                        }
+                    );
                 }
-
             }, function(response) {
                 // called asynchronously if an error occurs
                 // or server returns response with an error status.

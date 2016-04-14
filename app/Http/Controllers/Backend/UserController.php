@@ -27,14 +27,15 @@ class UserController extends Controller
 
     public function index(){
         JavaScript::put([
-            'title' => trans('label.sweet.title'),
-            'text' => trans('label.sweet.text'),
-            'confirmButtonText' => trans('label.sweet.confirmButtonText'),
-            'cancelButtonText' => trans('label.sweet.cancelButtonText'),
-            'deleteSuccessTitle' => trans('label.sweet.deleteSuccessTitle'),
-            'deleteSuccessText' => trans('label.sweet.deleteSuccessText'),
+            'index' => [
+                'title' => trans('label.prompt.user.delete.before.title'),
+                'text' => trans('label.prompt.user.delete.before.text'),
+                'confirmButtonText' => trans('label.prompt.user.delete.before.confirm'),
+                'cancelButtonText' => trans('label.prompt.user.delete.before.cancel'),
+                'deleteSuccessTitle' => trans('label.prompt.user.delete.before.successTitle'),
+                'deleteSuccessText' => trans('label.prompt.user.delete.before.successText'),
+            ]
         ]);
-
         return view('backend.user.index');
     }
 
@@ -71,26 +72,32 @@ class UserController extends Controller
      * @return        
      */
     public function create(){
-        JavaScript::put([
-            'storeUrl' => route('admin.user.store'),
-        ]);
+        
         return view('backend.user.index');
     }
 
     public function ngCreate(){
+        $jsVars = json_encode([
+            'storeUrl' => route('admin.user.store'),
+        ]);
+
         /*角色列表*/
         $roles = RoleRepo::all();
 
         /*权限列表*/
         $permissions = PermissionRepo::bkPermissionList();
 
-        return view('backend.user.ngcreate', compact('roles', 'permissions'));
+        return view('backend.user.ngcreate', compact('roles', 'permissions', 'jsVars'));
     }
 
     public function store(UserRequest $userRequest){
         $returnData = [
             'result' => false,
-            'message' => '添加用户失败'
+            'title' => trans('label.prompt.user.create.fail'),
+            'text' => trans('label.prompt.user.create.text'),
+            'confirm' => trans('label.prompt.user.create.confirm'),
+            'cancel' => trans('label.prompt.user.create.cancel'),
+            'indexUrlPath' => '/admin/user',
         ];
 
         $userData = [
@@ -112,7 +119,11 @@ class UserController extends Controller
 
             $returnData = [
                 'result' => true,
-                'message' => '添加用户成功'
+                'title' => trans('label.prompt.user.create.success'),
+                'text' => trans('label.prompt.user.create.text'),
+                'confirm' => trans('label.prompt.user.create.confirm'),
+                'cancel' => trans('label.prompt.user.create.cancel'),
+                'indexUrlPath' => '/admin/user',
             ];
         }
 

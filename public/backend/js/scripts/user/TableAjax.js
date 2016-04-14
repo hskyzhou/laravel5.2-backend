@@ -29,7 +29,6 @@ var TableAjax = function(){
           orderable : false,
           type : 'html',
           render : function(data, type, full, meta){
-            console.log(full);
             return '<input type="checkbox" data-id="'+data+'" class="icheck soncheckbox" data-checkbox="icheckbox_square-grey">';
           },
         },
@@ -115,13 +114,13 @@ var TableAjax = function(){
     $(document).on('click', '.userdelete', function(){
       var $this = $(this);
       swal({
-        title: title,
-        text: text,
+        title: index.title,
+        text: index.text,
         type: "error",
         showCancelButton: true,
         confirmButtonColor: "#DD6B55",
-        confirmButtonText: confirmButtonText,
-        cancelButtonText: cancelButtonText,
+        confirmButtonText: index.confirmButtonText,
+        cancelButtonText: index.cancelButtonText,
         closeOnConfirm: false,
         closeOnCancel: true },
         function(isConfirm){ 
@@ -171,13 +170,13 @@ var TableAjax = function(){
     $(document).on('click', '.moreuserdelete', function(){
       var $this = $(this);
       swal({
-        title: title,
-        text: text,
+        title: index.title,
+        text: index.text,
         type: "error",
         showCancelButton: true,
         confirmButtonColor: "#DD6B55",
-        confirmButtonText: confirmButtonText,
-        cancelButtonText: cancelButtonText,
+        confirmButtonText: index.confirmButtonText,
+        cancelButtonText: index.cancelButtonText,
         closeOnConfirm: false,
         closeOnCancel: true },
         function(isConfirm){ 
