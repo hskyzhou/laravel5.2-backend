@@ -77,6 +77,9 @@ var TableAjax = function(){
         	orderable : false,
         },
     	],
+      language : {
+        url : "/admin/i18n",
+      },
       drawCallback: function( settings ) {
         ajax_datatable.$('.popovers').popover( {
           html : true
@@ -89,7 +92,6 @@ var TableAjax = function(){
         $('.soncheckbox').iCheck({
           checkboxClass: 'icheckbox_square-grey',
         });
-
       },
     });
 

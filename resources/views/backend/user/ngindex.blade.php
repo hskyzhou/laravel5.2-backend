@@ -5,15 +5,11 @@
       <div class="portlet-title">
         <div class="caption">
           <i class="icon-settings font-dark"></i>
-          <span class="caption-subject font-dark sbold uppercase">Ajax Datatable</span>
+          <span class="caption-subject font-dark sbold uppercase">{{trans('label.user.list')}}</span>
         </div>
         <div class="actions">
           <div class="btn-group">
-            <a href="{{route('admin.user.create')}}" data-container='body' data-trigger='hover' data-placement='top' data-original-title="添加" class="btn btn-sm green tooltips">{{trans('label.button.add')}}
-              <i class="fa fa-user-plus"></i>
-            </a>
-            <a data-url="{{route('admin.user.deletes')}}" data-container='body' data-trigger='hover' data-placement='top' data-original-title="删除" class="btn btn-sm red tooltips moreuserdelete">{{trans('label.button.delete')}}
-              <i class="fa fa-remove"></i>
+            <a href="{{route('admin.user.create')}}" data-container='body' data-trigger='hover' data-placement='top' data-original-title="{{trans('button.user.add')}}" class="btn btn-sm green tooltips"><i class="fa fa-user-plus"></i>
             </a>
           </div>
         </div>
@@ -100,10 +96,6 @@
                   <div class="form-group form-md-line-input">
                     <div class="col-md-12">
                       <div class="input-group has-success">
-                        <span class="input-group-addon">
-                          <i class="fa fa-envelope"></i>
-                        </span>
-                        <input type="text" class="form-control form-filter" placeholder="{{trans('database.user.role')}}" name="role">
                         <div class="form-control-focus"> </div>
                       </div>
                     </div>
@@ -113,10 +105,6 @@
                   <div class="form-group form-md-line-input">
                     <div class="col-md-12">
                       <div class="input-group has-success">
-                        <span class="input-group-addon">
-                          <i class="fa fa-envelope"></i>
-                        </span>
-                        <input type="text" class="form-control form-filter" placeholder="{{trans('database.user.permission')}}" name="permission">
                         <div class="form-control-focus"> </div>
                       </div>
                     </div>
@@ -137,6 +125,13 @@
             <tbody>
             </tbody>
           </table>
+          <div class="actions">
+            <div class="btn-group">
+              <a data-url="{{route('admin.user.deletes')}}" data-container='body' data-trigger='hover' data-placement='top' data-original-title="{{trans('button.user.delete')}}" class="btn btn-sm red tooltips moreuserdelete">
+                <i class="fa fa-trash-o"></i>
+              </a>
+            </div>
+          </div>
         </div>
       </div>
     </div>

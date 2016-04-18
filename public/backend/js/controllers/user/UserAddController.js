@@ -110,7 +110,7 @@ angular.module('MetronicApp').controller('UserAddController', ['$rootScope', '$s
                     );
                 }
             }, function(response) {
-                // called asynchronously if an error occurs
+                // called asynchronously if an error occursee
                 // or server returns response with an error status.
                 if(response.status == 422){
                     var data = response.data;

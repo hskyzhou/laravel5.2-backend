@@ -237,86 +237,101 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', '$locationProvider',
                 }]
             }
         })
-        // Dashboard
-        .state('dashboard', {
-            url: "/dashboard.html",
-            templateUrl: "views/dashboard.html",            
-            data: {pageTitle: 'Admin Dashboard Template'},
-            controller: "DashboardController",
-            resolve: {
-                deps: ['$ocLazyLoad', function($ocLazyLoad) {
+        /*role*/
+        .state('role', {
+            url : '/admin/role',
+            templateUrl : "/admin/role/ngindex",
+            data : {pageTitle : "用户列表"},
+            controller : "RoleController",
+            resolve : {
+                deps : ['$ocLazyLoad', function($ocLazyLoad){
+                    return $ocLazyLoad.load(
+                        {
+                            cache : false,
+                            name : 'MetronicApp',
+                            insertBefore : '#ng_load_plugins_before',
+                            files : [
+                                'backend/plugins/datatables/datatables.min.css',
+                                'backend/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css',
+                                'backend/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css',
+                                'backend/plugins/bootstrap-select/css/bootstrap-select.min.css',
+                                'backend/plugins/sweetalert/dist/sweetalert.css',
+                                'backend/plugins/icheck/skins/all.css',
+
+                                'backend/global/plugins/datatables/datatables.all.min.js',
+                                'backend/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js',
+                                'backend/plugins/bootstrap-select/js/bootstrap-select.min.js',
+                                'backend/plugins/sweetalert/dist/sweetalert.min.js',
+                                'backend/plugins/icheck/icheck.min.js',
+
+                                'backend/js/scripts/role/TableAjax.js',
+                                'backend/js/controllers/role/RoleController.js',
+                            ]
+                        }
+                    );
+                }]
+            }
+        })
+        .state('role_add', {
+            url : '/admin/role/create',
+            templateUrl : 'admin/role/ngcreate',
+            data : {pageTitle : "添加用户"},
+            controller : 'RoleAddController',
+            resolve : {
+                deps : ['$ocLazyLoad', function($ocLazyLoad){
                     return $ocLazyLoad.load({
-                        name: 'MetronicApp',
-                        insertBefore: '#ng_load_plugins_before', // load the above css files before a LINK element with this ID. Dynamic CSS files must be loaded between core and theme css files
-                        files: [
-                            '../assets/global/plugins/morris/morris.css',                            
-                            '../assets/global/plugins/morris/morris.min.js',
-                            '../assets/global/plugins/morris/raphael-min.js',                            
-                            '../assets/global/plugins/jquery.sparkline.min.js',
+                        cache : false,
+                        name : 'MetronicApp',
+                        insertBefore : '#ng_load_plugins_before',
+                        files : [
+                            'backend/plugins/bootstrap-select/css/bootstrap-select.min.css',
+                            'backend/plugins/select2/css/select2.min.css',
+                            'backend/plugins/select2/css/select2-bootstrap.min.css',
+                            'backend/plugins/icheck/skins/all.css',
+                            'backend/plugins/sweetalert/dist/sweetalert.css',
 
-                            '../assets/pages/scripts/dashboard.min.js',
-                            'js/controllers/DashboardController.js',
-                        ] 
+                            'backend/plugins/bootstrap-select/js/bootstrap-select.min.js',
+                            'backend/plugins/select2/js/select2.full.min.js',
+                            'backend/plugins/icheck/icheck.min.js',
+                            'backend/plugins/bootstrap-growl/jquery.bootstrap-growl.min.js',
+                            'backend/plugins/sweetalert/dist/sweetalert.min.js',
+                            'backend/plugins/ngSweetAlert/SweetAlert.min.js',
+
+                            'backend/js/controllers/role/RoleAddController.js',
+                        ]
                     });
                 }]
             }
         })
-
-        // User Profile
-        .state("profile", {
-            url: "/profile",
-            templateUrl: "views/profile/main.html",
-            data: {pageTitle: 'User Profile'},
-            controller: "UserProfileController",
-            resolve: {
-                deps: ['$ocLazyLoad', function($ocLazyLoad) {
+        .state('role_update', {
+            url : '/admin/role/:id/edit',
+            templateUrl : function($stateParams){
+              return 'admin/role/ngedit/' + $stateParams.id;
+            },
+            data : {pageTitle : "修改用户"},
+            controller : 'RoleUpdateController',
+            resolve : {
+                deps : ['$ocLazyLoad', function($ocLazyLoad){
                     return $ocLazyLoad.load({
-                        name: 'MetronicApp',  
-                        insertBefore: '#ng_load_plugins_before', // load the above css files before '#ng_load_plugins_before'
-                        files: [
-                            '../assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css',
-                            '../assets/pages/css/profile.css',
-                            
-                            '../assets/global/plugins/jquery.sparkline.min.js',
-                            '../assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js',
+                        cache : false,
+                        name : 'MetronicApp',
+                        insertBefore : '#ng_load_plugins_before',
+                        files : [
+                            'backend/plugins/bootstrap-select/css/bootstrap-select.min.css',
+                            'backend/plugins/select2/css/select2.min.css',
+                            'backend/plugins/select2/css/select2-bootstrap.min.css',
+                            'backend/plugins/icheck/skins/all.css',
 
-                            '../assets/pages/scripts/profile.min.js',
+                            'backend/plugins/bootstrap-select/js/bootstrap-select.min.js',
+                            'backend/plugins/select2/js/select2.full.min.js',
+                            'backend/plugins/icheck/icheck.min.js',
 
-                            'js/controllers/UserProfileController.js'
-                        ]                    
+                            'backend/js/controllers/role/RoleUpdateController.js',
+                        ]
                     });
                 }]
             }
-        })
-        // Todo
-        .state('todo', {
-            url: "/todo",
-            templateUrl: "views/todo.html",
-            data: {pageTitle: 'Todo'},
-            controller: "TodoController",
-            resolve: {
-                deps: ['$ocLazyLoad', function($ocLazyLoad) {
-                    return $ocLazyLoad.load({ 
-                        name: 'MetronicApp',  
-                        insertBefore: '#ng_load_plugins_before', // load the above css files before '#ng_load_plugins_before'
-                        files: [
-                            '../assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css',
-                            '../assets/apps/css/todo-2.css',
-                            '../assets/global/plugins/select2/css/select2.min.css',
-                            '../assets/global/plugins/select2/css/select2-bootstrap.min.css',
-
-                            '../assets/global/plugins/select2/js/select2.full.min.js',
-                            
-                            '../assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js',
-
-                            '../assets/apps/scripts/todo-2.min.js',
-
-                            'js/controllers/TodoController.js'  
-                        ]                    
-                    });
-                }]
-            }
-        })
+        });
 }]);
 
 /* Init global settings and run the app */

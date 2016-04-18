@@ -21,10 +21,6 @@ use Hashids, Flash, JavaScript;
 
 class UserController extends Controller
 {
-    public function __construct(){
-
-    }
-
     public function index(){
         JavaScript::put([
             'index' => [
@@ -34,6 +30,7 @@ class UserController extends Controller
                 'cancelButtonText' => trans('label.prompt.user.delete.before.cancel'),
                 'deleteSuccessTitle' => trans('label.prompt.user.delete.before.successTitle'),
                 'deleteSuccessText' => trans('label.prompt.user.delete.before.successText'),
+                'i18n' => route('admin.i18n'),
             ]
         ]);
         return view('backend.user.index');

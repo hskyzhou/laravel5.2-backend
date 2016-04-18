@@ -10,6 +10,11 @@ use App\Http\Controllers\Controller;
 class RoleController extends Controller
 {
     public function index(){
-    	echo 'asda';	
+    	return view('backend.role.index');
+    }
+
+    
+    public function ngIndex(){
+    	return view('backend.role.ngindex');
     }
 }

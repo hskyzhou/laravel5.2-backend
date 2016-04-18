@@ -33,6 +33,30 @@
                 <span class="title">Dashboard</span>
             </a>
         </li>
+        <li class="start nav-item">
+            <a href="/admin/user">
+                <i class="icon-home"></i>
+                <span class="title">用户管理</span>
+            </a>
+        </li>
+        <li class="start nav-item">
+            <a href="/admin/role">
+                <i class="icon-home"></i>
+                <span class="title">角色管理</span>
+            </a>
+        </li>
+        <li class="start nav-item">
+            <a href="/admin/permission">
+                <i class="icon-home"></i>
+                <span class="title">权限管理</span>
+            </a>
+        </li>
+        <li class="start nav-item">
+            <a href="/admin/menu">
+                <i class="icon-home"></i>
+                <span class="title">菜单管理</span>
+            </a>
+        </li>
         <li class="nav-item">
             <a href="javascript:;" class="nav-link nav-toggle">
                 <i class="icon-settings"></i>

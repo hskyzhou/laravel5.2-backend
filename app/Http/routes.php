@@ -26,8 +26,9 @@ Route::get('/', function () {
 |
 */
 
-/*后天*/
+/*后台*/
 Route::group(['prefix' => 'admin', 'namespace' => 'Backend', 'middleware' => ['web']], function ($router) {
+	$router->get('i18n', 'IndexController@i18n')->name('admin.i18n');
     /*用户*/
     require(__DIR__ . '/Routes/UserRoute.php');
     

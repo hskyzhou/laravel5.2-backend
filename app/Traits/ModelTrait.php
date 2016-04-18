@@ -24,12 +24,12 @@
 		 */
 		public function createButton($options = []){
 			$defaultOptions = [
-				'name' => '添加',
+				'name' => trans('button.user.add'),
 				'url' => route($this->type . '.create'),
 				'class' => 'btn btn-success',
 			];
 			$options = array_merge($defaultOptions, $options);
-			$this->buttonString .= "<a href='{$options['url']}' class='tooltips {$options['class']}' data-container='body' data-trigger='hover' data-placement='top' data-content='' data-original-title='{$options['name']}'>{$options['name']}</a>";
+			$this->buttonString .= "<a href='{$options['url']}' class='tooltips {$options['class']}' data-container='body' data-trigger='hover' data-placement='top' data-content='' data-original-title='{$options['name']}'></a>";
 			return $this;
 		}
 
@@ -50,12 +50,12 @@
 				$encrypt_id = Hashids::encode($encrypt_id);
 			}
 			$defaultOptions = [
-				'name' => '修改',
+				'name' => trans('button.user.update'),
 				'url' => route($this->type . '.edit', [$encrypt_id]),
 				'class' => 'btn btn-warning',
 			];
 			$options = array_merge($defaultOptions, $options);
-			$this->buttonString .= "<a href='{$options['url']}' class='tooltips margin-bottom-5 {$options['class']}' data-container='body' data-trigger='hover' data-placement='top' data-content='' data-original-title='{$options['name']}'><i class='fa fa-edit'></i>{$options['name']}</a>";
+			$this->buttonString .= "<a href='{$options['url']}' class='tooltips margin-bottom-5 {$options['class']}' data-container='body' data-trigger='hover' data-placement='top' data-content='' data-original-title='{$options['name']}'><i class='fa fa-edit'></i></a>";
 			return $this;
 		}
 
@@ -76,12 +76,12 @@
 				$encrypt_id = Hashids::encode($encrypt_id);
 			}
 			$defaultOptions = [
-				'name' => '删除',
+				'name' => trans('button.user.delete'),
 				'url' => route($this->type . '.destroy', [$encrypt_id]),
 				'class' => 'btn btn-danger',
 			];
 			$options = array_merge($defaultOptions, $options);
-			$this->buttonString .= "<a data-url='{$options['url']}' class='tooltips margin-bottom-5 {$options['class']}' data-container='body' data-trigger='hover' data-placement='top' data-content='' data-original-title='{$options['name']}'><i class='fa fa-remove'></i>{$options['name']}</a>";
+			$this->buttonString .= "<a data-url='{$options['url']}' class='tooltips margin-bottom-5 {$options['class']}' data-container='body' data-trigger='hover' data-placement='top' data-content='' data-original-title='{$options['name']}'><i class='fa fa-trash-o'></i></a>";
 			return $this;
 		}
 	}
