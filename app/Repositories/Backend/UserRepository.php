@@ -8,13 +8,16 @@
 	use PermissionRepo;
 	/*第三方应用*/
 	use Hashids, DB;
+	
+	use App\Traits\RepositoryTrait;
 
 	class UserRepository{
+		use RepositoryTrait;
 		
 		/**
 		 * ajax 获取用户列表
 		 * 
-		 * @param		
+		 * @param		$searchData     数组
 		 * 
 		 * @author		xezw211@gmail.com
 		 * 
@@ -120,7 +123,7 @@
 		/**
 		 * 创建用户
 		 * 
-		 * @param		
+		 * @param		$userData     需要创建的用户信息
 		 * 
 		 * @author		xezw211@gmail.com
 		 * 
@@ -145,8 +148,8 @@
 		 * 通过用户id 获取用户信息		
 		 * 
 		 * @param		id  获取用户的id
-		 * @param 		select  获取的用户对象是否增加加密id
-		 * @param 		decode  对用户的id是否需要解密
+		 * @param 		encodeBool  获取的用户对象是否增加加密id
+		 * @param 		decodeBool  对用户的id是否需要解密
 		 * 
 		 * @author		xezw211@gmail.com
 		 * 
@@ -154,14 +157,14 @@
 		 * 
 		 * @return		
 		 */
-		public function userinfoById($id, $select = true, $decode = true){
+		public function userinfoById($id, $encodeBool = true, $decodeBool = true){
 			$userInfo = false;
 
-			$id = $this->decodeEncryptId($id, $decode);
+			$id = $this->decodeEncryptId($id, $decodeBool);
 
 			if(!empty($id)){
 				$userInfo = User::where('id', $id)->first();
-				$this->setEncryptId($userInfo, $select);
+				$this->setEncryptId($userInfo, $encodeBool);
 			}
 
 			return $userInfo;
@@ -170,7 +173,8 @@
 		/**
 		 * 修改用户信息		
 		 * 
-		 * @param		
+		 * @param		$id   用户id
+		 * @param       $userData    用户数据
 		 * 
 		 * @author		xezw211@gmail.com
 		 * 
@@ -190,11 +194,10 @@
 			return $userInfo;
 		}
 
-
 		/**
 		 * 删除用户
 		 * 
-		 * @param		
+		 * @param		$id   用户id
 		 * 
 		 * @author		xezw211@gmail.com
 		 * 
@@ -237,7 +240,7 @@
 		/**
 		 * 删除多个用户
 		 * 
-		 * @param		
+		 * @param		$ids    数组ids
 		 * 
 		 * @author		xezw211@gmail.com
 		 * 
@@ -265,48 +268,5 @@
 			}
 
 			return $deleteInfo;
-		}
-
-
-		/*===========================================私有方法========================*/
-		/**
-		 * 用户对象增加加密id
-		 * 
-		 * @param		
-		 * 
-		 * @author		xezw211@gmail.com
-		 * 
-		 * @date		2016-04-13 16:21:55
-		 * 
-		 * @return		
-		 */
-		private function setEncryptId($userInfo, $select = true){
-			if($userInfo && $select){
-				if(config('backend.project.encrypt.id')){
-					$userInfo->encrypt_id = Hashids::encode($userInfo->id);
-				}
-			}
-			return $userInfo;
-		}
-
-		/**
-		 * 破解 id
-		 * 
-		 * @param		
-		 * 
-		 * @author		xezw211@gmail.com
-		 * 
-		 * @date		2016-04-13 16:21:47
-		 * 
-		 * @return		
-		 */
-		private function decodeEncryptId($id, $decode = true){
-			if(config('backend.project.encrypt.id') && $decode){
-			    $id = Hashids::decode($id);
-			    if(!empty($id)){
-			    	$id = $id[0];
-			    }
-			}
-			return $id;
 		}
 	}
