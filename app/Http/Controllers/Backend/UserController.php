@@ -24,12 +24,12 @@ class UserController extends Controller
     public function index(){
         JavaScript::put([
             'index' => [
-                'title' => trans('label.prompt.user.delete.before.title'),
-                'text' => trans('label.prompt.user.delete.before.text'),
-                'confirmButtonText' => trans('label.prompt.user.delete.before.confirm'),
-                'cancelButtonText' => trans('label.prompt.user.delete.before.cancel'),
-                'deleteSuccessTitle' => trans('label.prompt.user.delete.before.successTitle'),
-                'deleteSuccessText' => trans('label.prompt.user.delete.before.successText'),
+                'title' => trans('prompt.user.delete.before.title'),
+                'text' => trans('prompt.user.delete.before.text'),
+                'confirmButtonText' => trans('prompt.user.delete.before.confirm'),
+                'cancelButtonText' => trans('prompt.user.delete.before.cancel'),
+                'deleteSuccessTitle' => trans('prompt.user.delete.before.successTitle'),
+                'deleteSuccessText' => trans('prompt.user.delete.before.successText'),
                 'i18n' => route('admin.i18n'),
             ]
         ]);
@@ -90,10 +90,10 @@ class UserController extends Controller
     public function store(UserRequest $userRequest){
         $returnData = [
             'result' => false,
-            'title' => trans('label.prompt.user.create.fail'),
-            'text' => trans('label.prompt.user.create.text'),
-            'confirm' => trans('label.prompt.user.create.confirm'),
-            'cancel' => trans('label.prompt.user.create.cancel'),
+            'title' => trans('prompt.user.create.fail'),
+            'text' => trans('prompt.user.create.text'),
+            'confirm' => trans('prompt.user.create.confirm'),
+            'cancel' => trans('prompt.user.create.cancel'),
             'indexUrlPath' => '/admin/user',
         ];
 
@@ -116,10 +116,10 @@ class UserController extends Controller
 
             $returnData = [
                 'result' => true,
-                'title' => trans('label.prompt.user.create.success'),
-                'text' => trans('label.prompt.user.create.text'),
-                'confirm' => trans('label.prompt.user.create.confirm'),
-                'cancel' => trans('label.prompt.user.create.cancel'),
+                'title' => trans('prompt.user.create.success'),
+                'text' => trans('prompt.user.create.text'),
+                'confirm' => trans('prompt.user.create.confirm'),
+                'cancel' => trans('prompt.user.create.cancel'),
                 'indexUrlPath' => '/admin/user',
             ];
         }

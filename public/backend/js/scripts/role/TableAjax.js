@@ -10,11 +10,10 @@ var TableAjax = function(){
       orderCellsTop: true,
       autoWidth: false,
       ajax: {
-      	url : "/admin/role/ajuserlist",
+      	url : "/admin/role/ajrolelist",
       	type: "GET",
       	data: function ( d ) {
       	  d.name = $('.filter input[name="name"]').val();
-      	  d.email = $('.filter input[name="email"]').val();
       	  d.status = $('.filter select[name="status"] option:selected').val();
       	  d.created_at_from = $('.filter input[name="created_at_from"]').val();
       	  d.created_at_to = $('.filter input[name="created_at_to"]').val();
@@ -38,12 +37,6 @@ var TableAjax = function(){
           className : 'text-center',
           orderable : false,
         },
-        {
-          data: "email",
-          name: "email",
-          className : 'text-center',
-          orderable : false,
-        },
         { 
           data: "status",
           name: "status",
@@ -55,19 +48,6 @@ var TableAjax = function(){
           name: "created_at",
           className : 'text-center',
           orderable : true,
-        },
-        { 
-          data: "roles",
-          name: "roles",
-          className : 'text-center',
-          orderable : false,
-        },
-        { 
-          data: "permissions",
-          name: "permissions",
-          className : 'text-center',
-          type : "html",
-          orderable : false,
         },
         { 
         	data: "button",
@@ -113,7 +93,7 @@ var TableAjax = function(){
     });
 
     /*删除用户*/
-    $(document).on('click', '.userdelete', function(){
+    $(document).on('click', '.infodelete', function(){
       var $this = $(this);
       swal({
         title: index.title,
@@ -169,7 +149,7 @@ var TableAjax = function(){
     });
 
     /*删除多个用户*/
-    $(document).on('click', '.moreuserdelete', function(){
+    $(document).on('click', '.moredelete', function(){
       var $this = $(this);
       swal({
         title: index.title,

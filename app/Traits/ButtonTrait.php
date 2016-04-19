@@ -3,7 +3,7 @@
 
 	use Hashids;
 
-	Trait ModelTrait{
+	Trait ButtonTrait{
 		private $buttonString;
 		private $encrypt_id;
 
@@ -24,12 +24,12 @@
 		 */
 		public function createButton($options = []){
 			$defaultOptions = [
-				'name' => trans('button.user.add'),
-				'url' => route($this->type . '.create'),
+				'name' => trans('button.'.$this->type.'add'),
+				'url' => route($this->prefix . $this->type . 'create'),
 				'class' => 'btn btn-success',
 			];
 			$options = array_merge($defaultOptions, $options);
-			$this->buttonString .= "<a href='{$options['url']}' class='tooltips {$options['class']}' data-container='body' data-trigger='hover' data-placement='top' data-content='' data-original-title='{$options['name']}'></a>";
+			$this->buttonString .= "<a href='{$options['url']}' class='tooltips {$options['class']}' data-container='body' data-trigger='hover' data-placement='top' data-content='' data-original-title='{$options['name']}'><i class='fa fa-plus'></i></a>";
 			return $this;
 		}
 
@@ -50,8 +50,8 @@
 				$encrypt_id = Hashids::encode($encrypt_id);
 			}
 			$defaultOptions = [
-				'name' => trans('button.user.update'),
-				'url' => route($this->type . '.edit', [$encrypt_id]),
+				'name' => trans('button.'.$this->type.'update'),
+				'url' => route($this->prefix . $this->type . 'edit', [$encrypt_id]),
 				'class' => 'btn btn-warning',
 			];
 			$options = array_merge($defaultOptions, $options);
@@ -76,8 +76,8 @@
 				$encrypt_id = Hashids::encode($encrypt_id);
 			}
 			$defaultOptions = [
-				'name' => trans('button.user.delete'),
-				'url' => route($this->type . '.destroy', [$encrypt_id]),
+				'name' => trans('button.'.$this->type.'delete'),
+				'url' => route($this->prefix . $this->type . 'destroy', [$encrypt_id]),
 				'class' => 'btn btn-danger',
 			];
 			$options = array_merge($defaultOptions, $options);

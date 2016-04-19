@@ -7,14 +7,16 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Bican\Roles\Traits\HasRoleAndPermission;
 use Bican\Roles\Contracts\HasRoleAndPermission as HasRoleAndPermissionContract;
 
-use App\Traits\ModelTrait;
+use App\Traits\ButtonTrait;
+use App\Traits\FieldTrait;
 
 class User extends Authenticatable implements HasRoleAndPermissionContract
 {
-    use ModelTrait;
+    use ButtonTrait, FieldTrait;
     use HasRoleAndPermission;
 
-    protected $type = 'admin.user';
+    protected $prefix = 'admin.';
+    protected $type = 'user.';
     
     /**
      * The attributes that are mass assignable.

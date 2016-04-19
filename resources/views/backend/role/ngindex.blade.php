@@ -5,12 +5,12 @@
       <div class="portlet-title">
         <div class="caption">
           <i class="icon-settings font-dark"></i>
-          <span class="caption-subject font-dark sbold uppercase">{{trans('label.user.list')}}</span>
+          <span class="caption-subject font-dark sbold uppercase">{{trans('label.role.list')}}</span>
         </div>
         <div class="actions">
           <div class="btn-group">
-            <a href="{{route('admin.user.create')}}" data-container='body' data-trigger='hover' data-placement='top' data-original-title="{{trans('button.user.add')}}" class="btn btn-sm green tooltips"><i class="fa fa-user-plus"></i>
-            </a>
+            {{-- 添加按钮 --}}
+            {!! $createButton !!}
           </div>
         </div>
       </div>
@@ -22,12 +22,9 @@
                 <th>
                   <input type="checkbox" class="icheck parentcheckbox" data-checkbox="icheckbox_square-grey">
                 </th>
-                <th>{{trans('database.user.name')}}</th>
-                <th>{{trans('database.user.email')}}</th>
-                <th width="10%">{{trans('database.user.status')}}</th>
-                <th>{{trans('database.user.created_at')}}</th>
-                <th>{{trans('database.user.role')}}</th>
-                <th>{{trans('database.user.permission')}}</th>
+                <th>{{trans('database.role.name')}}</th>
+                <th width="10%">{{trans('database.role.status')}}</th>
+                <th>{{trans('database.role.created_at')}}</th>
                 <th>{{trans('label.action')}}</th>
               </tr>
               <tr role="row" class="filter">
@@ -37,22 +34,9 @@
                     <div class="col-md-12">
                       <div class="input-group has-success">
                         <span class="input-group-addon">
-                          <i class="fa fa-user"></i>
+                          <i class="fa fa-role"></i>
                         </span>
-                        <input type="text" class="form-control form-filter" placeholder="{{trans('database.user.name')}}" name="name">
-                        <div class="form-control-focus"> </div>
-                      </div>
-                    </div>
-                  </div>
-                </td>
-                <td>
-                  <div class="form-group form-md-line-input">
-                    <div class="col-md-12">
-                      <div class="input-group has-success">
-                        <span class="input-group-addon">
-                          <i class="fa fa-envelope"></i>
-                        </span>
-                        <input type="text" class="form-control form-filter" placeholder="{{trans('database.user.email')}}" name="email">
+                        <input type="text" class="form-control form-filter" placeholder="{{trans('database.role.name')}}" name="name">
                         <div class="form-control-focus"> </div>
                       </div>
                     </div>
@@ -93,24 +77,6 @@
                   </div>
                 </td>
                 <td>
-                  <div class="form-group form-md-line-input">
-                    <div class="col-md-12">
-                      <div class="input-group has-success">
-                        <div class="form-control-focus"> </div>
-                      </div>
-                    </div>
-                  </div>
-                </td>
-                <td>
-                  <div class="form-group form-md-line-input">
-                    <div class="col-md-12">
-                      <div class="input-group has-success">
-                        <div class="form-control-focus"> </div>
-                      </div>
-                    </div>
-                  </div>
-                </td>
-                <td>
                   <div class="margin-bottom-5">
                     <button class="btn btn-sm green btn-outline filter-submit margin-bottom">
                       <i class="fa fa-search"></i> Search
@@ -127,7 +93,7 @@
           </table>
           <div class="actions">
             <div class="btn-group">
-              <a data-url="{{route('admin.user.deletes')}}" data-container='body' data-trigger='hover' data-placement='top' data-original-title="{{trans('button.user.delete')}}" class="btn btn-sm red tooltips moreuserdelete">
+              <a data-url="{{route('admin.role.deletes')}}" data-container='body' data-trigger='hover' data-placement='top' data-original-title="{{trans('button.role.delete')}}" class="btn btn-sm red tooltips moreroledelete">
                 <i class="fa fa-trash-o"></i>
               </a>
             </div>

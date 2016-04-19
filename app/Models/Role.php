@@ -4,11 +4,13 @@ namespace App\Models;
 
 use Bican\Roles\Models\Role as BicanRole;
 
-use App\Traits\ModelTrait;
+use App\Traits\ButtonTrait;
+use App\Traits\FieldTrait;
 
 class Role extends BicanRole
 {
-    use ModelTrait;
+    use ButtonTrait, FieldTrait;
 
-    protected $type = 'admin.role';
+    protected $prefix = 'admin.';
+    protected $type = 'role.';
 }

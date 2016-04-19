@@ -40,7 +40,7 @@
 		 */
 		private function decodeEncryptId($id, $decodeBool = true){
 			if(config('backend.project.encrypt.id') && $decodeBool){
-			    $id = Hashids::decodeBool($id);
+			    $id = Hashids::decode($id);
 			    if(!empty($id)){
 			    	$id = $id[0];
 			    }

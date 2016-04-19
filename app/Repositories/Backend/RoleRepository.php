@@ -8,13 +8,9 @@
 		use RepositoryTrait;
 		/**
 		 * 搜索用户列表
-		 * 
 		 * @param		
-		 * 
 		 * @author		xezw211@gmail.com
-		 * 
 		 * @date		2016-04-18 22:16:22
-		 * 
 		 * @return		
 		 */
 		public function searchRoleList(){
@@ -60,8 +56,8 @@
 				if(!$roles->isEmpty()){
 					foreach($roles as $key => $role){
 						$data[$key] = $this->setEncryptId($role)->toArray();
-						$data[$key]['status'] = $role->status == config('backend.project.status.open') ? "<span class='label label-success'>".trans('label.status.open') ."</span>" : "<span class='label label-danger'>".trans('label.status.close')."</span>";
-						$data[$key]['button'] = $role->updateButton()->deleteButton(['class' => 'btn btn-danger userdelete'])->getButtonString();
+						$data[$key]['status'] = $role->setStatusText();
+						$data[$key]['button'] = $role->updateButton()->deleteButton(['class' => 'btn btn-danger infodelete'])->getButtonString();
 					}
 				}
 
@@ -75,13 +71,9 @@
 		
 		/**
 		 * 获取所有角色
-		 * 
 		 * @param		
-		 * 
 		 * @author		xezw211@gmail.com
-		 * 
 		 * @date		2016-04-07 15:59:58
-		 * 
 		 * @return		
 		 */
 		public function all(){
@@ -90,13 +82,9 @@
 
 		/**
 		 * 通过slug获取角色
-		 * 
 		 * @param		$roles   用户角色
-		 * 
 		 * @author		xezw211@gmail.com
-		 * 
 		 * @date		2016-04-09 09:45:23
-		 * 
 		 * @return		
 		 */
 		public function getRolesBySlug($roles = []){
@@ -105,13 +93,9 @@
 
 		/**
 		 * 获取用户角色
-		 * 
 		 * @param		$user   \App\User  
-		 * 
 		 * @author		xezw211@gmail.com
-		 * 
 		 * @date		2016-04-12 10:05:14
-		 * 
 		 * @return		
 		 */
 		public function userRoles($user){
@@ -120,13 +104,9 @@
 
 		/**
 		 * 获取 用户角色的slug
-		 * 
 		 * @param		$user   \App\User  
-		 * 
 		 * @author		xezw211@gmail.com
-		 * 
 		 * @date		2016-04-12 10:43:05
-		 * 
 		 * @return		
 		 */
 		public function userRoleSlugs($user){
@@ -143,13 +123,9 @@
 
 		/**
 		 * 获取 用户角色名称
-		 * 
 		 * @param		$user   \App\User  
-		 * 
 		 * @author		xezw211@gmail.com
-		 * 
 		 * @date		2016-04-13 11:06:18
-		 * 
 		 * @return		
 		 */
 		public function userRoleNames($user){
@@ -166,16 +142,24 @@
 
 		/**
 		 * 删除用户 所有角色
-		 * 
 		 * @param		$user   \App\User  
-		 * 
 		 * @author		xezw211@gmail.com
-		 * 
 		 * @date		2016-04-12 11:55:22
-		 * 
 		 * @return		
 		 */
 		public function detachUserRoles($user){
 			$user->detachAllRoles();
+		}
+
+		/**
+		 * 生成添加按钮
+		 * @param		
+		 * @author		xezw211@gmail.com
+		 * @date		2016-04-19 17:38:29
+		 * @return		
+		 */
+		public function createButton(){
+			$role = new Role;
+			return $role->createButton()->getButtonString();
 		}
 	}

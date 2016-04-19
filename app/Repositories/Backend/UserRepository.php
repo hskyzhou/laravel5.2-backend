@@ -85,30 +85,12 @@
 				if(!$users->isEmpty()){
 					foreach($users as $key => $user){
 						$data[$key] = $this->setEncryptId($user)->toArray();
-						$data[$key]['status'] = $user->status == config('backend.project.status.open') ? "<span class='label label-success'>".trans('label.status.open') ."</span>" : "<span class='label label-danger'>".trans('label.status.close')."</span>";
+						$data[$key]['status'] = $user->setStatusText();
 						$data[$key]['roles'] = '';
 						$data[$key]['permissions'] = '';
-						$data[$key]['button'] = $user->updateButton()->deleteButton(['class' => 'btn btn-danger userdelete'])->getButtonString();
-
-						$roles = RoleRepo::userRoles($user);
-						if($roles && !$roles->isEmpty()){
-							foreach($roles as $role){
-								$rolePermissionNames = PermissionRepo::rolePermissionName($role);
-								$rolePermissionsBody = implode("<br />", $rolePermissionNames);
-								$rolePermissionsTitle = $role->name;
-
-								$data[$key]['roles'] .= "<button class='btn grey-mint popovers margin-bottom-5' data-container='body' data-trigger='hover' data-placement='right' data-content='{$rolePermissionsBody}' data-original-title='{$rolePermissionsTitle}'>{$rolePermissionsTitle}</button>";
-							}
-						}
-
-						$permissions = PermissionRepo::userAllPermissionKeys($user, 'name');
-						if($permissions){
-							$permission_body = implode("<br />", $permissions);
-							$permission_title  = trans('database.user.permission');
-							$data[$key]['permissions'] = "<button class='btn grey-mint popovers margin-bottom-5' data-container='body' data-trigger='hover' data-placement='right' data-content='{$permission_body}' data-original-title='{$permission_title}'>{$permission_title}</button>";
-
-
-						}
+						$data[$key]['button'] = $user->updateButton()->deleteButton(['class' => 'btn btn-danger infodelete'])->getButtonString();
+						$data[$key]['roles'] = $this->setUserRoles($user);
+						$data[$key]['permissions'] = $this->setUserPermissions($user);
 					}
 				}
 
@@ -208,15 +190,15 @@
 		public function deleteUser($id){
 			$returnData = [
 				'result' => true,
-				'title' => trans('label.prompt.user.delete.after.title'),
-				'message' => trans('label.prompt.user.delete.after.success'),
+				'title' => trans('prompt.user.delete.after.title'),
+				'message' => trans('prompt.user.delete.after.success'),
 			];
 			if(config('backend.project.delete.logic')){
 				/*逻辑删除*/
 				if(!$this->updateUser($id, ['status' => config('backend.project.status.close')])){
 					$returnData['result'] = false;
-					$returnData['title'] = trans('label.prompt.user.delete.after.title');
-					$returnData['message'] = trans('label.prompt.user.delete.after.fail');
+					$returnData['title'] = trans('prompt.user.delete.after.title');
+					$returnData['message'] = trans('prompt.user.delete.after.fail');
 				}
 			}else{
 				/*物理删除*/
@@ -224,13 +206,13 @@
 				if($userInfo){	
 					if(!$userInfo->delete()){
 						$returnData['result'] = false;
-						$returnData['title'] = trans('label.prompt.user.delete.after.title');
-						$returnData['message'] = trans('label.prompt.user.delete.after.fail');
+						$returnData['title'] = trans('prompt.user.delete.after.title');
+						$returnData['message'] = trans('prompt.user.delete.after.fail');
 					}
 				}else{
 					$returnData['result'] = false;
-					$returnData['title'] = trans('label.prompt.user.delete.after.title');
-					$returnData['message'] = trans('label.prompt.user.delete.after.fail');
+					$returnData['title'] = trans('prompt.user.delete.after.title');
+					$returnData['message'] = trans('prompt.user.delete.after.fail');
 				}
 			}
 
@@ -251,8 +233,8 @@
 		public function deleteUsers($ids){
 			$deleteInfo = [
 				'result' => true,
-				'title' => trans('label.prompt.user.delete.after.title'),
-				'message' => trans('label.prompt.user.delete.after.success'),
+				'title' => trans('prompt.user.delete.after.title'),
+				'message' => trans('prompt.user.delete.after.success'),
 			];
 
 			if(!empty($ids) && is_array($ids)){
@@ -268,5 +250,46 @@
 			}
 
 			return $deleteInfo;
+		}
+
+		/**
+		 * 设置 用户显示的角色
+		 * @param		App\User $user
+		 * @author		xezw211@gmail.com
+		 * @date		2016-04-19 17:12:33
+		 * @return		string
+		 */
+		private function setUserRoles($user){
+			$returnString = '';
+			$roles = RoleRepo::userRoles($user);
+			if($roles && !$roles->isEmpty()){
+				foreach($roles as $role){
+					$rolePermissionNames = PermissionRepo::rolePermissionName($role);
+					$rolePermissionsBody = implode("<br />", $rolePermissionNames);
+					$rolePermissionsTitle = $role->name;
+
+					$returnString .= "<button class='btn grey-mint popovers margin-bottom-5' data-container='body' data-trigger='hover' data-placement='right' data-content='{$rolePermissionsBody}' data-original-title='{$rolePermissionsTitle}'>{$rolePermissionsTitle}</button>";
+				}
+			}
+
+			return $returnString;
+		}
+
+		/**
+		 * 设置用户显示的权限
+		 * @param		
+		 * @author		xezw211@gmail.com
+		 * @date		2016-04-19 17:12:52
+		 * @return		
+		 */
+		private function setUserPermissions($user){
+			$returnString = '';
+			$permissions = PermissionRepo::userAllPermissionKeys($user, 'name');
+			if($permissions){
+				$permission_body = implode("<br />", $permissions);
+				$permission_title  = trans('database.user.permission');
+				$returnString = "<button class='btn grey-mint popovers margin-bottom-5' data-container='body' data-trigger='hover' data-placement='right' data-content='{$permission_body}' data-original-title='{$permission_title}'>{$permission_title}</button>";
+			}
+			return $returnString;
 		}
 	}

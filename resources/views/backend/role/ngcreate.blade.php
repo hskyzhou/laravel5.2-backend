@@ -1,4 +1,4 @@
-<div ng-controller="UserAddController">
+<div ng-controller="RoleAddController">
   <div ng-init="jsVars = {{$jsVars}}"></div>
   <div class="row">
     <div class="col-md-12">
@@ -108,7 +108,7 @@
                       <div class="input-group">
                         <div class="icheck-list">
                           <label ng-click="parentCheckboxClick()">
-                            <input type="checkbox" class="icheck parentcheckbox" data-checkbox="icheckbox_square-grey">{{trans('permission.' . $key)}}
+                            {{trans('permission.' . $key)}}
                           </label>
                           @if(is_array($permission))
                             @foreach($permission as $sonPermission)

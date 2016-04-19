@@ -113,7 +113,7 @@ var TableAjax = function(){
     });
 
     /*删除用户*/
-    $(document).on('click', '.userdelete', function(){
+    $(document).on('click', '.infodelete', function(){
       var $this = $(this);
       swal({
         title: index.title,
@@ -169,7 +169,7 @@ var TableAjax = function(){
     });
 
     /*删除多个用户*/
-    $(document).on('click', '.moreuserdelete', function(){
+    $(document).on('click', '.moredelete', function(){
       var $this = $(this);
       swal({
         title: index.title,
