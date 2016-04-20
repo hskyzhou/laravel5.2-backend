@@ -26,14 +26,16 @@
 		 * @return		
 		 */
 		public function searchUserList($searchData = []){
-			$draw = (isset($searchData['draw']) && !empty($searchData['draw'])) ? $searchData['draw'] : request('draw', '');
-			$name = (isset($searchData['name']) && !empty($searchData['name'])) ? $searchData['name'] : request('name', '');
-			$email = (isset($searchData['email']) && !empty($searchData['email'])) ? $searchData['email'] : request('email', '');
-			$status = (isset($searchData['status']) && !empty($searchData['status'])) ? $searchData['status'] : request('status', '');
-			$created_at_from = (isset($searchData['created_at_from']) && !empty($searchData['created_at_from'])) ? $searchData['created_at_from'] : request('created_at_from', '');
-			$created_at_to = (isset($searchData['created_at_to']) && !empty($searchData['created_at_to'])) ? $searchData['created_at_to'] : request('created_at_to', '');
-			$updated_at_from = (isset($searchData['updated_at_from']) && !empty($searchData['updated_at_from'])) ? $searchData['updated_at_from'] : request('updated_at_from', '');
-			$updated_at_to = (isset($searchData['updated_at_to']) && !empty($searchData['updated_at_to'])) ? $searchData['updated_at_to'] : request('updated_at_to', '');
+			$draw = $this->getFieldValue($searchData, 'draw');
+			$name = $this->getFieldValue($searchData, 'name');
+			$email = $this->getFieldValue($searchData, 'email');
+			$status = $this->getFieldValue($searchData, 'status');
+			$created_at_from = $this->getFieldValue($searchData, 'created_at_from');
+			$created_at_to = $this->getFieldValue($searchData, 'created_at_to');
+			$updated_at_from = $this->getFieldValue($searchData, 'updated_at_from');
+			$updated_at_to = $this->getFieldValue($searchData, 'updated_at_to');
+			$start = $this->getFieldValue($searchData, 'start');
+			$length = $this->getFieldValue($searchData, 'length');
 
 			$returnData = [
 				'draw' => $draw,
@@ -81,7 +83,7 @@
 			if($count){
 				/*用户数据处理*/
 				$data = [];
-				$users = $user->get();
+				$users = $user->offset($start)->limit($length)->get();
 				if(!$users->isEmpty()){
 					foreach($users as $key => $user){
 						$data[$key] = $this->setEncryptId($user)->toArray();
@@ -114,7 +116,6 @@
 		 * @return		
 		 */
 		public function createUser($userData){
-			
 			$user = new User;
 
 			$user->fill($userData)->save();
@@ -139,7 +140,7 @@
 		 * 
 		 * @return		
 		 */
-		public function userinfoById($id, $encodeBool = true, $decodeBool = true){
+		public function userInfoById($id, $encodeBool = true, $decodeBool = true){
 			$userInfo = false;
 
 			$id = $this->decodeEncryptId($id, $decodeBool);
@@ -165,7 +166,7 @@
 		 * @return		
 		 */
 		public function updateUser($id, $userData){
-			$userInfo = $this->userinfoById($id, false);
+			$userInfo = $this->userInfoById($id, false);
 
 			if($userInfo){
 				$userInfo->fill($userData)->push();
@@ -202,7 +203,7 @@
 				}
 			}else{
 				/*物理删除*/
-				$userInfo = $this->userinfoById($id);
+				$userInfo = $this->userInfoById($id);
 				if($userInfo){	
 					if(!$userInfo->delete()){
 						$returnData['result'] = false;

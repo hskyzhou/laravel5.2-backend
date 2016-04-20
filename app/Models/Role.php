@@ -13,4 +13,6 @@ class Role extends BicanRole
 
     protected $prefix = 'admin.';
     protected $type = 'role.';
+
+    protected $fillable = ['name', 'slug', 'description', 'level', 'status', 'created_at', 'updated_at'];
 }

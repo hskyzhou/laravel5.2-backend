@@ -2,11 +2,11 @@
 
 namespace App\Listeners\Backend;
 
-use App\Events\Backend\AddPermissionEvent;
+use App\Events\Backend\RoleAddPermissionEvent;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class AddPermissionEventListener
+class RoleAddPermissionEventListener
 {
     /**
      * Create the event listener.
@@ -21,17 +21,17 @@ class AddPermissionEventListener
     /**
      * Handle the event.
      *
-     * @param  AddPermissionEvent  $event
+     * @param  RoleAddPermissionEvent  $event
      * @return void
      */
-    public function handle(AddPermissionEvent $event)
+    public function handle(RoleAddPermissionEvent $event)
     {
-        $user = $event->user;
+        $role = $event->role;
         $permissions = $event->permissions;
 
         if($permissions && !$permissions->isEmpty()){
             foreach($permissions as $permission){
-                $user->attachPermission($permission);
+                $role->attachPermission($permission);
             }
         }
     }

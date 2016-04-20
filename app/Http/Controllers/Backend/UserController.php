@@ -14,8 +14,8 @@ use PermissionRepo;
 /*Request*/
 use App\Http\Requests\UserRequest;
 /*Event*/
-use App\Events\Backend\AddRoleEvent;
-use App\Events\Backend\AddPermissionEvent;
+use App\Events\Backend\UserAddRoleEvent;
+use App\Events\Backend\UserAddPermissionEvent;
 /*第三方库*/
 use Hashids, Flash, JavaScript;
 
@@ -23,14 +23,16 @@ class UserController extends Controller
 {
     public function index(){
         JavaScript::put([
-            'index' => [
-                'title' => trans('prompt.user.delete.before.title'),
-                'text' => trans('prompt.user.delete.before.text'),
-                'confirmButtonText' => trans('prompt.user.delete.before.confirm'),
-                'cancelButtonText' => trans('prompt.user.delete.before.cancel'),
-                'deleteSuccessTitle' => trans('prompt.user.delete.before.successTitle'),
-                'deleteSuccessText' => trans('prompt.user.delete.before.successText'),
-                'i18n' => route('admin.i18n'),
+            'user' => [
+                'swal' => [
+                    'title' => trans('prompt.user.delete.before.title'),
+                    'text' => trans('prompt.user.delete.before.text'),
+                    'confirmButtonText' => trans('prompt.user.delete.before.confirm'),
+                    'cancelButtonText' => trans('prompt.user.delete.before.cancel'),
+                    'deleteSuccessTitle' => trans('prompt.user.delete.before.successTitle'),
+                    'deleteSuccessText' => trans('prompt.user.delete.before.successText'),
+                    'i18n' => route('admin.i18n'),
+                ]
             ]
         ]);
         return view('backend.user.index');
@@ -101,7 +103,7 @@ class UserController extends Controller
             'name' => request('name', ''),
             'email' => request('email', ''),
             'password' => bcrypt(request('password', '')),
-            'status' => request('status', config('project.status.open')),
+            'status' => request('status', config('backend.project.status.open')),
         ];
 
         $user = UserRepo::createUser($userData);
@@ -109,10 +111,10 @@ class UserController extends Controller
         if($user){
             /*添加用户角色*/
             $roles = RoleRepo::getRolesBySlug(request('roles', []));
-            event(new AddRoleEvent($user, $roles));
+            event(new UserAddRoleEvent($user, $roles));
             /*添加用户权限*/
             $permissions = PermissionRepo::getPermissionsBySlug(request('permissions', []));
-            event(new AddPermissionEvent($user, $permissions));
+            event(new UserAddPermissionEvent($user, $permissions));
 
             $returnData = [
                 'result' => true,
@@ -154,7 +156,7 @@ class UserController extends Controller
         $permissions = PermissionRepo::bkPermissionList();
 
         /*用户信息*/
-        $userInfo = UserRepo::userinfoById($id);
+        $userInfo = UserRepo::userInfoById($id);
         $userRoleSlugs = RoleRepo::userRoleSlugs($userInfo);
         $userPermissionSlugs = PermissionRepo::userPermissionSlugs($userInfo);
 
@@ -165,7 +167,7 @@ class UserController extends Controller
         $userData = [
             'name' => request('name', ''),
             'email' => request('email', ''),
-            'status' => request('status', config('project.status.open')),
+            'status' => request('status', config('backend.project.status.open')),
         ];
 
         $user = UserRepo::updateUser($id, $userData);
@@ -175,12 +177,12 @@ class UserController extends Controller
             $roles = RoleRepo::getRolesBySlug(request('roles', []));
             /*删除用户所有角色*/
             RoleRepo::detachUserRoles($user);
-            event(new AddRoleEvent($user, $roles));
+            event(new UserAddRoleEvent($user, $roles));
             /*添加用户权限*/
             $permissions = PermissionRepo::getPermissionsBySlug(request('permissions', []));
             /*删除用户所有权限*/
             PermissionRepo::detachUserPermissions($user);
-            event(new AddPermissionEvent($user, $permissions));
+            event(new UserAddPermissionEvent($user, $permissions));
             Flash::info('修改用户成功');
         }
 
@@ -199,7 +201,7 @@ class UserController extends Controller
      * @return        
      */
     public function destroy($id){
-        return UserRepo::deleteUser($id);
+        return UserRepo::deleteRole($id);
     }
 
     /**

@@ -47,4 +47,15 @@
 			}
 			return $id;
 		}
+
+		/**
+		 * 自动获取字段值
+		 * @param		
+		 * @author		xezw211@gmail.com
+		 * @date		2016-04-20 17:13:35
+		 * @return		
+		 */
+		private function getFieldValue($arr, $key){
+			return (isset($arr[$key]) && !empty($arr[$key])) ? $arr[$key] : request($key, '');
+		}
 	}

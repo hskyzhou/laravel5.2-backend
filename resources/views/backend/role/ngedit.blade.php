@@ -1,5 +1,4 @@
-<div ng-controller="RoleAddController">
-  <div ng-init="jsVars = {{$jsVars}}"></div>
+<div ng-controller="RoleUpdateController">
   <div class="row">
     <div class="col-md-12">
       <!-- BEGIN VALIDATION STATES-->
@@ -7,27 +6,28 @@
         <div class="portlet-title">
           <div class="caption">
             <i class=" icon-layers font-green"></i>
-            <span class="caption-subject font-green sbold uppercase">{{trans('label.role.add')}}</span>
+            <span class="caption-subject font-green sbold uppercase">{{trans('label.role.edit')}}</span>
           </div>
           <div class="actions">
-            
+          
           </div>
         </div>
 
         <div class="portlet-body">
-          <form action="{{route('admin.role.store')}}" class="form-horizontal" method="post">
+          <form action="{{route('admin.role.update', [$roleInfo->encrypt_id])}}" class="form-horizontal" method="post">
             {{csrf_field()}}
+            {!! method_field('put') !!}
             <div class="form-body">
               <div class="row">
                 <div class="col-md-4">
                   <div class="form-group form-md-line-input has-success">
-                    <label class="col-md-2 control-label" for="form_control_1">{{trans('database.role.name')}}</label>
+                    <label class="col-md-2 control-label" for="form_control_1">{{trans('database.user.name')}}</label>
                     <div class="col-md-8">
                       <div class="input-group has-success">
                           <span class="input-group-addon">
                             <i class="fa fa-user"></i>
                           </span>
-                          <input type="text" class="form-control" placeholder="{{trans('database.role.name')}}" name="name" ng-model="userData.name">
+                          <input type="text" class="form-control" placeholder="{{trans('database.user.name')}}" name="name" value="{{$roleInfo['name']}}">
                           <div class="form-control-focus"> </div>
                       </div>
                     </div>
@@ -40,7 +40,7 @@
                           <span class="input-group-addon">
                             <i class="fa fa-star-o"></i>
                           </span>
-                          <input type="text" class="form-control" placeholder="{{trans('database.role.slug')}}" name="slug" ng-model="userData.slug">
+                          <input type="text" class="form-control" placeholder="{{trans('database.role.slug')}}" name="slug" value="{{$roleInfo['slug']}}">
                           <div class="form-control-focus"> </div>
                       </div>
                     </div>
@@ -53,18 +53,18 @@
                           <span class="input-group-addon">
                             <i class="fa fa-soccer-ball-o"></i>
                           </span>
-                          <textarea class="form-control" rows="3" placeholder="{{trans('database.role.description')}}" name="description" ng-model="userData.description"></textarea>
+                          <textarea class="form-control" rows="3" placeholder="{{trans('database.role.description')}}" name="description">{{$roleInfo['description']}}</textarea>
                           <div class="form-control-focus"> </div>
                       </div>
                     </div>
                   </div>
 
                   <div class="form-group form-md-line-input has-success">
-                    <label class="col-md-2 control-label" for="form_control_1">{{trans('database.role.status')}}</label>
+                    <label class="col-md-2 control-label" for="form_control_1">{{trans('database.user.status')}}</label>
                     <div class="col-md-8">
-                      <select id="statusselect" class="bs-select form-control form-filter" data-show-subtext="true" name="status">
-                        <option value="{{config('backend.project.status.open')}}" data-content="{{trans('label.status.open')}} <span class='label lable-sm label-success'>OPEN </span>">{{trans('label.status.open')}}</option>
-                        <option value="{{config('backend.project.status.close')}}" data-content="{{trans('label.status.close')}} <span class='label lable-sm label-danger'>CLOSE </span>">{{trans('label.status.close')}}</option>
+                      <select class="bs-select form-control form-filter" data-show-subtext="true" name="status">
+                        <option value="{{config('backend.project.status.open')}}" data-content="{{trans('label.status.open')}} <span class='label lable-sm label-success'>OPEN </span>" @if($roleInfo['status'] == config('backend.project.status.open')) selected @endif>{{trans('label.status.open')}}</option>
+                        <option value="{{config('backend.project.status.close')}}" data-content="{{trans('label.status.close')}} <span class='label lable-sm label-danger'>CLOSE </span>" @if($roleInfo['status'] == config('backend.project.status.close')) selected @endif>{{trans('label.status.close')}}</option>
                       </select>
                     </div>
                   </div>
@@ -76,7 +76,7 @@
                           <span class="input-group-addon">
                             <i class="fa fa-wrench"></i>
                           </span>
-                          <input type="text" class="form-control" placeholder="{{trans('database.role.level')}}" name="level" ng-model="userData.level">
+                          <input type="text" class="form-control" placeholder="{{trans('database.role.level')}}" name="level" value="{{$roleInfo->level}}">
                           <div class="form-control-focus"> </div>
                           <span class="help-block">{{trans('database.role.help.level')}}</span>
                       </div>
@@ -86,7 +86,7 @@
 
                   <div class="form-group form-md-line-input has-success">
                     <div class="col-md-4 col-md-offset-2">
-                      <a class="btn btn-success" ng-click="create()">提交</a>
+                      <button class="btn btn-success">提交</button>
                     </div>
                   </div>
                 </div>
@@ -107,7 +107,7 @@
                           @if(is_array($permission))
                             @foreach($permission as $sonPermission)
                               <label style="margin-left:30px;">
-                                <input type="checkbox" class="icheck soncheckbox" data-checkbox="icheckbox_square-grey" value="{{$sonPermission['value']}}" name="permissions[]">{{$sonPermission['name']}}
+                                <input type="checkbox" class="icheck soncheckbox" data-checkbox="icheckbox_square-grey" value="{{$sonPermission['value']}}" name="permissions[]" @if(in_array($sonPermission['value'], $rolePermissionSlugs)) checked @endif>{{$sonPermission['name']}}
                               </label>
                             @endforeach
                           @endif   

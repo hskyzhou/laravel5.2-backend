@@ -1,6 +1,7 @@
 var TableAjax = function(){
 	/*初始化表格*/
-	var initTable = function(){
+	var initTable = function(data){
+    console.log(data);
 		var dt = $('#datatable_ajax');
 		var ajax_datatable = $("#datatable_ajax").DataTable({
 			searching : false,	
@@ -58,7 +59,7 @@ var TableAjax = function(){
         },
     	],
       language : {
-        url : "/admin/i18n",
+        url : role.swal.i18n,
       },
       drawCallback: function( settings ) {
         ajax_datatable.$('.popovers').popover( {
@@ -96,13 +97,13 @@ var TableAjax = function(){
     $(document).on('click', '.infodelete', function(){
       var $this = $(this);
       swal({
-        title: index.title,
-        text: index.text,
+        title: role.swal.title,
+        text: role.swal.text,
         type: "error",
         showCancelButton: true,
         confirmButtonColor: "#DD6B55",
-        confirmButtonText: index.confirmButtonText,
-        cancelButtonText: index.cancelButtonText,
+        confirmButtonText: role.swal.confirmButtonText,
+        cancelButtonText: role.swal.cancelButtonText,
         closeOnConfirm: false,
         closeOnCancel: true },
         function(isConfirm){ 
@@ -152,13 +153,13 @@ var TableAjax = function(){
     $(document).on('click', '.moredelete', function(){
       var $this = $(this);
       swal({
-        title: index.title,
-        text: index.text,
+        title: role.swal.title,
+        text: role.swal.text,
         type: "error",
         showCancelButton: true,
         confirmButtonColor: "#DD6B55",
-        confirmButtonText: index.confirmButtonText,
-        cancelButtonText: index.cancelButtonText,
+        confirmButtonText: role.swal.confirmButtonText,
+        cancelButtonText: role.swal.cancelButtonText,
         closeOnConfirm: false,
         closeOnCancel: true },
         function(isConfirm){ 
@@ -207,8 +208,8 @@ var TableAjax = function(){
 	}
 
 	return {
-		init : function(){
-			initTable();
+		init : function(data){
+			initTable(data);
 		}
 	}
 }();

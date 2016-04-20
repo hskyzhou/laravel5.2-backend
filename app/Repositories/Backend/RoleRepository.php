@@ -3,9 +3,42 @@
 
 	use App\Models\Role;
 	use App\Traits\RepositoryTrait;
+	use DB;
 
 	class RoleRepository{
 		use RepositoryTrait;
+
+		/**
+		 * 创建角色
+		 * @param		
+		 * @author		xezw211@gmail.com
+		 * @date		2016-04-20 11:11:59
+		 * @return		
+		 */
+		public function createRole($roleData){
+			$role = new Role;
+
+			$role->fill($roleData)->save();
+
+			if(!$role){
+				\Log::info("用户添加失败\n");
+			}
+
+			return $role;
+		}
+
+		/**
+		 * 生成添加按钮
+		 * @param		
+		 * @author		xezw211@gmail.com
+		 * @date		2016-04-19 17:38:29
+		 * @return		
+		 */
+		public function createButton(){
+			$role = new Role;
+			return $role->createButton()->getButtonString();
+		}
+
 		/**
 		 * 搜索用户列表
 		 * @param		
@@ -13,12 +46,14 @@
 		 * @date		2016-04-18 22:16:22
 		 * @return		
 		 */
-		public function searchRoleList(){
-			$draw = (isset($searchData['draw']) && !empty($searchData['draw'])) ? $searchData['draw'] : request('draw', '');
-			$name = (isset($searchData['name']) && !empty($searchData['name'])) ? $searchData['name'] : request('name', '');
-			$status = (isset($searchData['status']) && !empty($searchData['status'])) ? $searchData['status'] : request('status', '');
-			$created_at_from = (isset($searchData['created_at_from']) && !empty($searchData['created_at_from'])) ? $searchData['created_at_from'] : request('created_at_from', '');
-			$created_at_to = (isset($searchData['created_at_to']) && !empty($searchData['created_at_to'])) ? $searchData['created_at_to'] : request('created_at_to', '');
+		public function searchRoleList($searchData = []){
+			$draw = $this->getFieldValue($searchData, 'draw');
+			$name = $this->getFieldValue($searchData, 'name');
+			$status = $this->getFieldValue($searchData, 'status');
+			$created_at_from = $this->getFieldValue($searchData, 'created_at_from');
+			$created_at_to = $this->getFieldValue($searchData, 'created_at_to');
+			$start = $this->getFieldValue($searchData, 'start');
+			$length = $this->getFieldValue($searchData, 'length');
 
 			$returnData = [
 				'draw' => $draw,
@@ -52,7 +87,7 @@
 			if($count){
 				/*用户数据处理*/
 				$data = [];
-				$roles = $role->get();
+				$roles = $role->offset($start)->limit($length)->get();
 				if(!$roles->isEmpty()){
 					foreach($roles as $key => $role){
 						$data[$key] = $this->setEncryptId($role)->toArray();
@@ -151,15 +186,105 @@
 			$user->detachAllRoles();
 		}
 
+		public function roleInfoById($id, $encodeBool = true, $decodeBool = true){
+			$roleInfo = false;
+
+			$id = $this->decodeEncryptId($id, $decodeBool);
+
+			if(!empty($id)){
+				$roleInfo = Role::where('id', $id)->first();
+				$this->setEncryptId($roleInfo, $encodeBool);
+			}
+
+			return $roleInfo;
+		}
+
 		/**
-		 * 生成添加按钮
-		 * @param		
+		 * 删除角色
+		 * @param		string 	$id
 		 * @author		xezw211@gmail.com
-		 * @date		2016-04-19 17:38:29
+		 * @date		2016-04-20 11:37:11
 		 * @return		
 		 */
-		public function createButton(){
-			$role = new Role;
-			return $role->createButton()->getButtonString();
+		public function deleteRole($id){
+			$returnData = [
+				'result' => true,
+				'title' => trans('prompt.role.delete.after.title'),
+				'message' => trans('prompt.role.delete.after.success'),
+			];
+
+			if(config('backend.project.delete.logic')){
+				/*逻辑删除*/
+				if(!$this->updateUser($id, ['status' => config('backend.project.status.close')])){
+					$returnData['result'] = false;
+					$returnData['title'] = trans('prompt.role.delete.after.title');
+					$returnData['message'] = trans('prompt.role.delete.after.fail');
+				}
+			}else{
+				/*物理删除*/
+				$userInfo = $this->roleInfoById($id);
+				if($userInfo){	
+					if(!$userInfo->delete()){
+						$returnData['result'] = false;
+						$returnData['title'] = trans('prompt.role.delete.after.title');
+						$returnData['message'] = trans('prompt.role.delete.after.fail');
+					}
+				}else{
+					$returnData['result'] = false;
+					$returnData['title'] = trans('prompt.role.delete.after.title');
+					$returnData['message'] = trans('prompt.role.delete.after.fail');
+				}
+			}
+
+			return $returnData;
+		}
+
+		/**
+		 * 删除多个角色
+		 * @param		
+		 * @author		xezw211@gmail.com
+		 * @date		2016-04-20 11:44:25
+		 * @return		
+		 */
+		public function deleteRoles($ids){
+			$deleteInfo = [
+				'result' => true,
+				'title' => trans('prompt.user.delete.after.title'),
+				'message' => trans('prompt.user.delete.after.success'),
+			];
+
+			if(!empty($ids) && is_array($ids)){
+				DB::beginTransaction();
+				foreach($ids as $id){
+					$deleteInfo = $this->deleteRole($id);
+					if(!$deleteInfo['result']){
+						DB::rollBack();
+						break;
+					}
+				}
+				DB::commit();
+			}
+
+			return $deleteInfo;
+		}
+
+		/**
+		 * 修改用户角色
+		 * @param		string  $id
+		 * @param 		array   $roleData
+		 * @author		xezw211@gmail.com
+		 * @date		2016-04-20 13:16:26
+		 * @return		
+		 */
+		public function updateRole($id, $roleData){
+			$roleInfo = $this->roleInfoById($id, false);
+
+			if($roleInfo){
+				$roleInfo->fill($roleData)->push();
+			}else{
+				\Log::info('更新用户失败');
+			}
+
+			return $roleInfo;
 		}
 	}

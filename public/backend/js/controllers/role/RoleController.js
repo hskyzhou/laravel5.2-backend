@@ -3,17 +3,19 @@ angular.module('MetronicApp').controller('RoleController', function($rootScope, 
         // initialize core components
         App.initAjax();
         /*初始化表格*/
-        TableAjax.init();
+        $scope.jsVars.title = 'asfasfsf';
+        // console.log(this.jsVars);
+        TableAjax.init($scope.js.vars);
 
         $(".bs-select").selectpicker({
-        	iconBase:"fa",tickIcon:"fa-check"
-       	});
+          iconBase:"fa",tickIcon:"fa-check"
+        });
 
-       	$(".date-picker").datepicker({
-       		format:"yyyy/mm/dd",
-       		autoclose:true,
-       		todayBtn:true,
-       	});
+        $(".date-picker").datepicker({
+          format:"yyyy/mm/dd",
+          autoclose:true,
+          todayBtn:true,
+        });
     });
 
     // set sidebar closed and body solid layout mode

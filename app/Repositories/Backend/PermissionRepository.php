@@ -108,13 +108,9 @@
 
 		/**
 		 * 获取 角色权限
-		 * 
 		 * @param		
-		 * 
 		 * @author		wen.zhou@bioon.com
-		 * 
 		 * @date		2016-04-13 13:57:22
-		 * 
 		 * @return		
 		 */
 		public function rolePermissions($role){
@@ -123,13 +119,9 @@
 
 		/**
 		 * 获取角色权限的名称
-		 * 
 		 * @param		
-		 * 
 		 * @author		wen.zhou@bioon.com
-		 * 
 		 * @date		2016-04-13 13:58:19
-		 * 
 		 * @return		
 		 */
 		public function rolePermissionName($role){
@@ -142,18 +134,32 @@
 			}
 
 			return $rolePermissionNames;
+		}
 
+		/**
+		 * 获取角色权限的标识
+		 * @param		
+		 * @author		xezw211@gmail.com
+		 * @date		2016-04-20 11:53:59
+		 * @return		
+		 */
+		public function rolePermissionSlugs($role){
+			$rolePermissionSlugs = [];
+
+			$rolePermissions = $this->rolePermissions($role);
+
+			if(!$rolePermissions->isEmpty()){
+				$rolePermissionSlugs = $rolePermissions->keyBy('slug')->keys()->toArray();
+			}
+
+			return $rolePermissionSlugs;
 		}
 
 		/**
 		 * 获取 用户所有权限
-		 * 
 		 * @param		
-		 * 
 		 * @author		xezw211@gmail.com
-		 * 
 		 * @date		2016-04-13 11:11:13
-		 * 
 		 * @return		
 		 */
 		public function userAllPermissions($user){
@@ -162,13 +168,9 @@
 
 		/**
 		 * 获取用户所有权限的name
-		 * 
 		 * @param		
-		 * 
 		 * @author		xezw211@gmail.com
-		 * 
 		 * @date		2016-04-13 11:11:55
-		 * 
 		 * @return		
 		 */
 		public function userAllPermissionKeys($user, $key = 'name'){
@@ -183,20 +185,25 @@
 			return $userAllPermissionSlugs;
 		}
 		
-		
-
 		/**
 		 * 删除用户所有权限
-		 * 
 		 * @param		
-		 * 
 		 * @author		xezw211@gmail.com
-		 * 
 		 * @date		2016-04-12 11:56:39
-		 * 
 		 * @return		
 		 */
 		public function detachUserPermissions($user){
 			$user->detachAllPermissions();
+		}
+
+		/**
+		 * 删除角色所有权限
+		 * @param		
+		 * @author		xezw211@gmail.com
+		 * @date		2016-04-20 13:20:45
+		 * @return		
+		 */
+		public function detachRolePermissions($role){
+			$role->detachAllPermissions();
 		}
 	}

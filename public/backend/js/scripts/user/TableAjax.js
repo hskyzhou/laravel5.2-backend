@@ -78,7 +78,7 @@ var TableAjax = function(){
         },
     	],
       language : {
-        url : "/admin/i18n",
+        url : user.swal.i18n,
       },
       drawCallback: function( settings ) {
         ajax_datatable.$('.popovers').popover( {
@@ -116,13 +116,13 @@ var TableAjax = function(){
     $(document).on('click', '.infodelete', function(){
       var $this = $(this);
       swal({
-        title: index.title,
-        text: index.text,
+        title: user.swal.title,
+        text: user.swal.text,
         type: "error",
         showCancelButton: true,
         confirmButtonColor: "#DD6B55",
-        confirmButtonText: index.confirmButtonText,
-        cancelButtonText: index.cancelButtonText,
+        confirmButtonText: user.swal.confirmButtonText,
+        cancelButtonText: user.swal.cancelButtonText,
         closeOnConfirm: false,
         closeOnCancel: true },
         function(isConfirm){ 
@@ -145,6 +145,10 @@ var TableAjax = function(){
               }
             })
             .fail(function(response) {
+              if(response.status == '500'){
+                // console.log(response);
+                swal('删除失败', response.responseText, "error"); 
+              }
               if(response.status == '405'){
                 swal('删除失败', '请求出错', "error"); 
               }
@@ -172,13 +176,13 @@ var TableAjax = function(){
     $(document).on('click', '.moredelete', function(){
       var $this = $(this);
       swal({
-        title: index.title,
-        text: index.text,
+        title: user.swal.title,
+        text: user.swal.text,
         type: "error",
         showCancelButton: true,
         confirmButtonColor: "#DD6B55",
-        confirmButtonText: index.confirmButtonText,
-        cancelButtonText: index.cancelButtonText,
+        confirmButtonText: user.swal.confirmButtonText,
+        cancelButtonText: user.swal.cancelButtonText,
         closeOnConfirm: false,
         closeOnCancel: true },
         function(isConfirm){ 
@@ -223,7 +227,6 @@ var TableAjax = function(){
           }
       });
     });
-
 	}
 
 	return {
